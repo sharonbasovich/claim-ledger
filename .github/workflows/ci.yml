@@ -1,0 +1,24 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm run assets   # pinned, sha256-verified model + ORT wasm
+      - run: npm run build
+      - run: npm test
+      - name: e2e (includes a real in-browser model load)
+        run: |
+          npx playwright install chromium --with-deps
+          npx playwright test
