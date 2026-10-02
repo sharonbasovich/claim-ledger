@@ -204,7 +204,7 @@ test.describe("model load (real)", () => {
     // instead of being hidden behind a two-minute missing-element timeout.
     const status = page.locator("#modelctl .chip-ok, #modelctl .chip-err");
     await expect(status).toBeVisible({ timeout: 120_000 });
-    expect(await status.innerText()).toContain("AI ranking on");
+    expect(await status.textContent()).toContain("AI ranking on");
     await expect(page.locator(".chip-ok")).toBeVisible();
   }
 
