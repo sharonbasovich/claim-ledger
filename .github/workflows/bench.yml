@@ -1,0 +1,24 @@
+name: bench
+
+on:
+  push:
+    paths: [bench/**, src/**, public/sample/**]
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  benchmark:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm run assets   # pinned, sha256-verified model + ORT wasm
+      - run: npm run bench
+      - uses: actions/upload-artifact@v4
+        with:
+          name: bench-results
+          path: bench/results.json
