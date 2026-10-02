@@ -4,7 +4,7 @@ A local-first **review desk** for project handoffs. A teammate drops a project p
 
 The model only ranks nearby snippets. It never verifies truth, and it never writes prose answers.
 
-> **Fully Autonomous AI construction.** This project was researched, designed, implemented, tested, benchmarked and documented by AI agents (Devin, by Cognition) under the owner's direction — including this README and the article draft. Automated tests and the frozen benchmark are machine QA, not human feedback. No human wrote the code; owner review of the output has not been confirmed.
+> **Fully Autonomous AI construction.** This project was researched, designed, implemented, tested, benchmarked and documented by AI agents (Devin, by Cognition, and OpenAI-powered assistants) under the owner's direction — including this README and the article draft. Automated tests and the frozen benchmark are machine QA, not human feedback. No human wrote the code; owner review of the output has not been confirmed.
 
 ## Why it exists
 
@@ -95,8 +95,8 @@ npm test           # vitest unit tests (48)
 npx playwright test  # e2e incl. a real in-browser model load (16)
 ```
 
-The compact source archive (the `Source ↓` link on the demo, or
-`claim-ledger-source.zip`) intentionally omits `public/models/` and
+The repository and its downloadable source archive intentionally omit
+`public/models/` and
 `public/ort/` binaries. After extracting: `npm ci && npm run assets` —
 `scripts/fetch-assets.sh` downloads the six model files from Hugging Face at
 the pinned revision `e6ac24e5…` and copies the four ORT files from the
@@ -114,4 +114,4 @@ Deploy: `dist/` is fully static — any host works. A GitHub Actions workflow (`
 
 ## Build record
 
-Builder session began ~2026-10-02T02:19:33Z (approx, per session record); first local commit `3eba768` at 2026-10-02T02:59:43Z — that commit postdates all tuning runs, so no claim corpus was *committed* before tuning. What is demonstrable: `bench/queries.jsonl` was written and sha256-hashed in the working tree before the τ change was inspected (hash `16b5c516…` recorded in `bench/QUERIES.sha256`). Commit SHAs are reported as claimed until the GitHub repository is reachable and history can be verified — the workspace currently has no GitHub connection (push denied). Free static demo: https://dist-fbysspjc.devinapps.com
+Builder session began ~2026-10-02T02:19:33Z (approx, per session record); first local commit `3eba768` at 2026-10-02T02:59:43Z — that commit postdates all tuning runs, so no claim corpus was *committed* before tuning. What is demonstrable: `bench/queries.jsonl` was written and sha256-hashed in the working tree before the τ change was inspected (hash `16b5c516…` recorded in `bench/QUERIES.sha256`). The original local commit IDs above are builder-reported; this GitHub repository was published as a reviewed source snapshot, so those local IDs are not claimed to exist in its history. The exact 56-file reviewed snapshot was independently matched at public commit a041a1d572a3fc24e08eb8fbe1160ddc07984ae8. Subsequent public commits contain the source-link and CI preview-server fixes. Live demo: https://sharonbasovich.github.io/claim-ledger/
