@@ -186,11 +186,32 @@ test.describe("safety", () => {
 });
 
 test.describe("model load (real)", () => {
+  test.beforeEach(async ({ page }) => {
+    page.on("console", (message) => {
+      if (message.type() === "error" || message.type() === "warning") {
+        console.log(`[browser ${message.type()}] ${message.text()}`);
+      }
+    });
+    page.on("pageerror", (error) => console.log(`[browser pageerror] ${error.message}`));
+    page.on("requestfailed", (request) => {
+      console.log(`[request failed] ${request.url()} ${request.failure()?.errorText}`);
+    });
+  });
+
+  async function enableRealModel(page: Page) {
+    await page.locator("#enable-model").click();
+    // Wait for either terminal state, so real errors appear immediately in CI
+    // instead of being hidden behind a two-minute missing-element timeout.
+    const status = page.locator("#modelctl .chip-ok, #modelctl .chip-err");
+    await expect(status).toBeVisible({ timeout: 120_000 });
+    expect(await status.innerText()).toContain("AI ranking on");
+    await expect(page.locator(".chip-ok")).toBeVisible();
+  }
+
   test("enable → ready, receipts re-ranked with semantic modes", async ({ page }) => {
     test.setTimeout(180_000);
     await loadSample(page);
-    await page.locator("#enable-model").click();
-    await expect(page.locator(".chip-ok")).toContainText("AI ranking on", { timeout: 120_000 });
+    await enableRealModel(page);
     // receipts were auto-computed after ready
     await expect(page.locator(".claim .receipt").first()).toBeVisible({ timeout: 60_000 });
     const modeChip = await page.locator(".claim .receipt .chip-mode-semantic, .claim .receipt .chip-mode-hybrid").first().textContent();
@@ -206,8 +227,7 @@ test.describe("model load (real)", () => {
   test("corpus change mid-embedding drops late results", async ({ page }) => {
     test.setTimeout(180_000);
     await loadSample(page);
-    await page.locator("#enable-model").click();
-    await expect(page.locator(".chip-ok")).toContainText("AI ranking on", { timeout: 120_000 });
+    await enableRealModel(page);
     // widen the embed window deterministically, then race a removal against it
     await page.evaluate(() => { (window as unknown as { __cl_embedDelayMs: number }).__cl_embedDelayMs = 1200; });
     await page.locator(".doc").first().getByRole("button", { name: "Remove" }).click(); // invalidate vectors
@@ -222,8 +242,7 @@ test.describe("model load (real)", () => {
   test("source replacement mid-embedding drops late results", async ({ page }) => {
     test.setTimeout(180_000);
     await loadSample(page);
-    await page.locator("#enable-model").click();
-    await expect(page.locator(".chip-ok")).toContainText("AI ranking on", { timeout: 120_000 });
+    await enableRealModel(page);
     await page.evaluate(() => { (window as unknown as { __cl_embedDelayMs: number }).__cl_embedDelayMs = 1200; });
     const claim = page.locator(".claim", { has: page.locator(".receipt") }).first();
     await claim.getByRole("button", { name: "Re-rank" }).click();
