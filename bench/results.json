@@ -1,0 +1,2968 @@
+{
+  "generatedAt": "2026-10-02T08:55:40.750Z",
+  "fingerprints": {
+    "code_sha256": "738b3e874ed489b42e27aa619662029ea16e050984cdf4843774dea6eb903ad6",
+    "code_files": [
+      "bench/chunks.ts",
+      "bench/run.ts",
+      "src/bm25.ts",
+      "src/chunker.ts",
+      "src/search.ts",
+      "src/types.ts"
+    ],
+    "git_head": "c52fc06c2585fed597ca8b6dcd7a4eeb78e522a5",
+    "git_dirty_at_run": true,
+    "corpus_sha256": "647585a94946a54d678f2202f0dc8f5b88e51da204e95c342a615c58d73ad921",
+    "queries_sha256": "16b5c5166359bda1cb4b8cf20e129628dc391cba8d5c676d0dac09fbfb333609",
+    "chunk_count": 40,
+    "chunk_set_sha256": "7698d7439e6cc54410ab6a87f3d57cb9a88c5858cbdbd05def7a9c3833e26f30",
+    "model": "mixedbread-ai/mxbai-embed-xsmall-v1 @ e6ac24e5d6efb8782b59de1647b3ececb4ece94e, q8 onnx",
+    "abstention_threshold": 0.25
+  },
+  "environment": {
+    "runtime": "node v24.19.0",
+    "platform": "linux x64",
+    "model": "mixedbread-ai/mxbai-embed-xsmall-v1 @ e6ac24e5, q8 onnx, vendored in repo",
+    "chunker": "paragraphs, <=400 approx tokens",
+    "notes": "Questions written by the same AI that built the app; corpus is fictional. This measures retrieval on one small synthetic packet, not real-world accuracy."
+  },
+  "corpus": {
+    "docs": 12,
+    "chunks": 40,
+    "sha256": "647585a94946a54d678f2202f0dc8f5b88e51da204e95c342a615c58d73ad921"
+  },
+  "queries": {
+    "n": 48,
+    "sha256": "16b5c5166359bda1cb4b8cf20e129628dc391cba8d5c676d0dac09fbfb333609",
+    "matches_frozen": true
+  },
+  "timings": {
+    "model_load_ms": 521,
+    "index_ms": 120,
+    "per_query_ms": 1.1
+  },
+  "abstention_threshold_used": 0.25,
+  "tuning_disclosure": "Exploratory, not held-out. τ was tuned on this same frozen query set after inspecting an early run (0.42 → 0.25). The original τ=0.42 raw output was overwritten and is LOST; observed console numbers are recorded in docs/TUNING.md. A later re-run at τ=0.42 is preserved at bench/archival/results-exploratory-tau042.json — it is a re-run, not the original. An older τ=0.25 report generated on a pre-final chunker (38 chunks) is preserved at bench/archival/results-tau025-38chunk-pre-final.json. THIS file is the reproducible final-code run; its fingerprints section ties it to exact code/corpus/model. No threshold separates no-answer from answerable queries (see abstention_sweep).",
+  "abstention_sweep": [
+    {
+      "threshold": 0.2,
+      "correct_abstains": 0,
+      "false_abstains": 0
+    },
+    {
+      "threshold": 0.3,
+      "correct_abstains": 0,
+      "false_abstains": 1
+    },
+    {
+      "threshold": 0.4,
+      "correct_abstains": 1,
+      "false_abstains": 7
+    },
+    {
+      "threshold": 0.5,
+      "correct_abstains": 4,
+      "false_abstains": 18
+    },
+    {
+      "threshold": 0.6,
+      "correct_abstains": 6,
+      "false_abstains": 29
+    }
+  ],
+  "methods": [
+    {
+      "method": "bm25",
+      "answerable": {
+        "n": 40,
+        "hit1_n": 20,
+        "hit3_n": 31,
+        "hit1": 0.5,
+        "hit3": 0.775,
+        "mrr": 0.642
+      },
+      "abstention": {
+        "n_no_answer": 8,
+        "correct": 0,
+        "missed": 8,
+        "false_abstains": 1,
+        "precision": 0,
+        "recall": 0
+      },
+      "per_category": {
+        "paraphrase": {
+          "n": 8,
+          "hit1": 0.25,
+          "hit3": 0.625,
+          "mrr": 0.473,
+          "abstain_ok": null
+        },
+        "identifier": {
+          "n": 8,
+          "hit1": 0.875,
+          "hit3": 1,
+          "mrr": 0.917,
+          "abstain_ok": null
+        },
+        "negation": {
+          "n": 8,
+          "hit1": 0.625,
+          "hit3": 1,
+          "mrr": 0.792,
+          "abstain_ok": null
+        },
+        "numbers": {
+          "n": 8,
+          "hit1": 0.25,
+          "hit3": 0.5,
+          "mrr": 0.399,
+          "abstain_ok": null
+        },
+        "no_answer": {
+          "n": 8,
+          "hit1": null,
+          "hit3": null,
+          "mrr": null,
+          "abstain_ok": "0/8"
+        },
+        "cross_project": {
+          "n": 8,
+          "hit1": 0.5,
+          "hit3": 0.75,
+          "mrr": 0.628,
+          "abstain_ok": null
+        }
+      },
+      "failures": [
+        {
+          "q": "q01",
+          "expected": "trailmend-limits-md#c0 | trailmend-readme-md#c0",
+          "got": "inkwell-limits-md#c2, trailmend-readme-md#c1, trailmend-readme-md#c0",
+          "note": "gold at rank 3"
+        },
+        {
+          "q": "q02",
+          "expected": "inkwell-readme-md#c0",
+          "got": "inkwell-limits-md#c1, inkwell-setup-md#c0, inkwell-setup-md#c1",
+          "note": "gold at rank 4"
+        },
+        {
+          "q": "q03",
+          "expected": "pantrypal-readme-md#c2",
+          "got": "trailmend-setup-md#c3, trailmend-limits-md#c1, pantrypal-readme-md#c1",
+          "note": "gold at rank 5"
+        },
+        {
+          "q": "q04",
+          "expected": "pantrypal-readme-md#c1",
+          "got": "pantrypal-readme-md#c0, pantrypal-readme-md#c1, trailmend-readme-md#c2",
+          "note": "gold at rank 2"
+        },
+        {
+          "q": "q05",
+          "expected": "trailmend-readme-md#c1",
+          "got": "(abstained)",
+          "note": "abstained on an answerable question"
+        },
+        {
+          "q": "q06",
+          "expected": "pantrypal-readme-md#c1",
+          "got": "pantrypal-limits-md#c2, pantrypal-readme-md#c1, inkwell-limits-md#c1",
+          "note": "gold at rank 2"
+        },
+        {
+          "q": "q13",
+          "expected": "trailmend-tests-md#c2",
+          "got": "trailmend-tests-md#c3, inkwell-tests-md#c3, trailmend-tests-md#c2",
+          "note": "gold at rank 3"
+        },
+        {
+          "q": "q17",
+          "expected": "trailmend-limits-md#c0",
+          "got": "trailmend-readme-md#c0, trailmend-limits-md#c0, pantrypal-limits-md#c1",
+          "note": "gold at rank 2"
+        },
+        {
+          "q": "q22",
+          "expected": "inkwell-limits-md#c1",
+          "got": "pantrypal-limits-md#c1, inkwell-limits-md#c1, trailmend-tests-md#c2",
+          "note": "gold at rank 2"
+        },
+        {
+          "q": "q24",
+          "expected": "trailmend-limits-md#c2",
+          "got": "trailmend-readme-md#c1, pantrypal-limits-md#c1, trailmend-limits-md#c2",
+          "note": "gold at rank 3"
+        },
+        {
+          "q": "q25",
+          "expected": "trailmend-tests-md#c1 | trailmend-tests-md#c2",
+          "got": "pantrypal-tests-md#c2, trailmend-setup-md#c0, trailmend-tests-md#c0",
+          "note": "gold at rank 38"
+        },
+        {
+          "q": "q26",
+          "expected": "inkwell-limits-md#c0",
+          "got": "pantrypal-readme-md#c2, inkwell-limits-md#c1, inkwell-readme-md#c0",
+          "note": "gold at rank 28"
+        },
+        {
+          "q": "q27",
+          "expected": "pantrypal-tests-md#c1",
+          "got": "pantrypal-tests-md#c2, pantrypal-tests-md#c1, pantrypal-setup-md#c0",
+          "note": "gold at rank 2"
+        },
+        {
+          "q": "q30",
+          "expected": "inkwell-readme-md#c1",
+          "got": "inkwell-readme-md#c0, pantrypal-limits-md#c1, inkwell-tests-md#c0",
+          "note": "gold at rank 11"
+        },
+        {
+          "q": "q31",
+          "expected": "trailmend-tests-md#c3",
+          "got": "pantrypal-tests-md#c3, trailmend-tests-md#c3, trailmend-readme-md#c2",
+          "note": "gold at rank 2"
+        },
+        {
+          "q": "q32",
+          "expected": "inkwell-tests-md#c2",
+          "got": "inkwell-tests-md#c3, inkwell-readme-md#c0, inkwell-tests-md#c0",
+          "note": "gold at rank 28"
+        },
+        {
+          "q": "q33",
+          "expected": "(abstain)",
+          "got": "trailmend-limits-md#c0",
+          "note": "false positive on a no-answer question"
+        },
+        {
+          "q": "q34",
+          "expected": "(abstain)",
+          "got": "trailmend-readme-md#c0",
+          "note": "false positive on a no-answer question"
+        },
+        {
+          "q": "q35",
+          "expected": "(abstain)",
+          "got": "inkwell-setup-md#c2",
+          "note": "false positive on a no-answer question"
+        },
+        {
+          "q": "q36",
+          "expected": "(abstain)",
+          "got": "trailmend-readme-md#c0",
+          "note": "false positive on a no-answer question"
+        },
+        {
+          "q": "q37",
+          "expected": "(abstain)",
+          "got": "pantrypal-setup-md#c0",
+          "note": "false positive on a no-answer question"
+        },
+        {
+          "q": "q38",
+          "expected": "(abstain)",
+          "got": "trailmend-readme-md#c0",
+          "note": "false positive on a no-answer question"
+        },
+        {
+          "q": "q39",
+          "expected": "(abstain)",
+          "got": "pantrypal-readme-md#c2",
+          "note": "false positive on a no-answer question"
+        },
+        {
+          "q": "q40",
+          "expected": "(abstain)",
+          "got": "inkwell-setup-md#c0",
+          "note": "false positive on a no-answer question"
+        },
+        {
+          "q": "q41",
+          "expected": "inkwell-tests-md#c1",
+          "got": "inkwell-tests-md#c2, trailmend-limits-md#c2, trailmend-tests-md#c0",
+          "note": "gold at rank 7"
+        },
+        {
+          "q": "q45",
+          "expected": "pantrypal-readme-md#c1",
+          "got": "pantrypal-readme-md#c0, pantrypal-setup-md#c1, trailmend-setup-md#c2",
+          "note": "gold at rank 22"
+        },
+        {
+          "q": "q47",
+          "expected": "pantrypal-tests-md#c1 | inkwell-tests-md#c2",
+          "got": "pantrypal-tests-md#c2, trailmend-setup-md#c2, inkwell-tests-md#c2",
+          "note": "gold at rank 3"
+        },
+        {
+          "q": "q48",
+          "expected": "pantrypal-readme-md#c0 | pantrypal-setup-md#c2",
+          "got": "pantrypal-limits-md#c2, pantrypal-readme-md#c0, trailmend-readme-md#c0",
+          "note": "gold at rank 2"
+        }
+      ],
+      "rows": [
+        {
+          "id": "q01",
+          "category": "paraphrase",
+          "query": "Can I use the trail planner on a plane with no signal?",
+          "gold": [
+            "trailmend-limits-md#c0",
+            "trailmend-readme-md#c0"
+          ],
+          "bm25_abstained": false,
+          "bm25_top3": [
+            "inkwell-limits-md#c2@6.828",
+            "trailmend-readme-md#c1@5.828",
+            "trailmend-readme-md#c0@5.785"
+          ],
+          "bm25_hit1": 0,
+          "bm25_hit3": 1
+        },
+        {
+          "id": "q02",
+          "category": "paraphrase",
+          "query": "Could the company hosting the relay read what I write?",
+          "gold": [
+            "inkwell-readme-md#c0"
+          ],
+          "bm25_abstained": false,
+          "bm25_top3": [
+            "inkwell-limits-md#c1@2.954",
+            "inkwell-setup-md#c0@2.629",
+            "inkwell-setup-md#c1@2.629"
+          ],
+          "bm25_hit1": 0,
+          "bm25_hit3": 0
+        },
+        {
+          "id": "q03",
+          "category": "paraphrase",
+          "query": "How do I get my grocery data into a spreadsheet?",
+          "gold": [
+            "pantrypal-readme-md#c2"
+          ],
+          "bm25_abstained": false,
+          "bm25_top3": [
+            "trailmend-setup-md#c3@3.197",
+            "trailmend-limits-md#c1@3.164",
+            "pantrypal-readme-md#c1@2.390"
+          ],
+          "bm25_hit1": 0,
+          "bm25_hit3": 0
+        },
+        {
+          "id": "q04",
+          "category": "paraphrase",
+          "query": "Will it warn me before the milk goes bad?",
+          "gold": [
+            "pantrypal-readme-md#c1"
+          ],
+          "bm25_abstained": false,
+          "bm25_top3": [
+            "pantrypal-readme-md#c0@3.006",
+            "pantrypal-readme-md#c1@2.798",
+            "trailmend-readme-md#c2@1.983"
+          ],
+          "bm25_hit1": 0,
+          "bm25_hit3": 1
+        },
+        {
+          "id": "q05",
+          "category": "paraphrase",
+          "query": "How long will my hike take?",
+          "gold": [
+            "trailmend-readme-md#c1"
+          ],
+          "bm25_abstained": true,
+          "bm25_top3": [
+            "inkwell-limits-md#c0@0.000",
+            "inkwell-limits-md#c1@0.000",
+            "inkwell-limits-md#c2@0.000"
+          ]
+        },
+        {
+          "id": "q06",
+          "category": "paraphrase",
+          "query": "Can two people share one shopping list at home?",
+          "gold": [
+            "pantrypal-readme-md#c1"
+          ],
+          "bm25_abstained": false,
+          "bm25_top3": [
+            "pantrypal-limits-md#c2@2.941",
+            "pantrypal-readme-md#c1@2.815",
+            "inkwell-limits-md#c1@2.775"
+          ],
+          "bm25_hit1": 0,
+          "bm25_hit3": 1
+        },
+        {
+          "id": "q07",
+          "category": "paraphrase",
+          "query": "What happens when the same note is edited on two laptops at once?",
+          "gold": [
+            "inkwell-readme-md#c1",
+            "inkwell-limits-md#c1"
+          ],
+          "bm25_abstained": false,
+          "bm25_top3": [
+            "inkwell-limits-md#c1@5.628",
+            "pantrypal-limits-md#c1@4.846",
+            "trailmend-setup-md#c2@4.593"
+          ],
+          "bm25_hit1": 1,
+          "bm25_hit3": 1
+        },
+        {
+          "id": "q08",
+          "category": "paraphrase",
+          "query": "Can I send my trip plan to a friend as a document?",
+          "gold": [
+            "trailmend-readme-md#c2"
+          ],
+          "bm25_abstained": false,
+          "bm25_top3": [
+            "trailmend-readme-md#c2@6.897",
+            "inkwell-setup-md#c1@5.797",
+            "pantrypal-readme-md#c2@5.247"
+          ],
+          "bm25_hit1": 1,
+          "bm25_hit3": 1
+        },
+        {
+          "id": "q09",
+          "category": "identifier",
+          "query": "What does TRAILMEND_TILE_DIR configure?",
+          "gold": [
+            "trailmend-setup-md#c1"
+          ],
+          "bm25_abstained": false,
+          "bm25_top3": [
+            "trailmend-setup-md#c1@3.343",
+            "pantrypal-limits-md#c1@2.927",
+            "trailmend-limits-md#c2@2.415"
+          ],
+          "bm25_hit1": 1,
+          "bm25_hit3": 1
+        },
+        {
+          "id": "q10",
+          "category": "identifier",
+          "query": "Which port does the pantry web UI use?",
+          "gold": [
+            "pantrypal-setup-md#c2"
+          ],
+          "bm25_abstained": false,
+          "bm25_top3": [
+            "pantrypal-setup-md#c2@7.608",
+            "inkwell-setup-md#c0@4.399",
+            "pantrypal-readme-md#c0@3.474"
+          ],
+          "bm25_hit1": 1,
+          "bm25_hit3": 1
+        },
+        {
+          "id": "q11",
+          "category": "identifier",
+          "query": "Where is INKWELL_KEY used?",
+          "gold": [
+            "inkwell-setup-md#c1"
+          ],
+          "bm25_abstained": false,
+          "bm25_top3": [
+            "inkwell-setup-md#c1@3.033",
+            "trailmend-readme-md#c2@1.160",
+            "trailmend-setup-md#c2@0.979"
+          ],
+          "bm25_hit1": 1,
+          "bm25_hit3": 1
+        },
+        {
+          "id": "q12",
+          "category": "identifier",
+          "query": "How big is the elevation database file?",
+          "gold": [
+            "trailmend-setup-md#c3"
+          ],
+          "bm25_abstained": false,
+          "bm25_top3": [
+            "trailmend-setup-md#c3@5.382",
+            "trailmend-tests-md#c3@3.455",
+            "inkwell-limits-md#c2@3.051"
+          ],
+          "bm25_hit1": 1,
+          "bm25_hit3": 1
+        },
+        {
+          "id": "q13",
+          "category": "identifier",
+          "query": "What is the name of the failing GPX test?",
+          "gold": [
+            "trailmend-tests-md#c2"
+          ],
+          "bm25_abstained": false,
+          "bm25_top3": [
+            "trailmend-tests-md#c3@5.010",
+            "inkwell-tests-md#c3@4.462",
+            "trailmend-tests-md#c2@4.316"
+          ],
+          "bm25_hit1": 0,
+          "bm25_hit3": 1
+        },
+        {
+          "id": "q14",
+          "category": "identifier",
+          "query": "Which port does the Inkwell relay listen on?",
+          "gold": [
+            "inkwell-setup-md#c0"
+          ],
+          "bm25_abstained": false,
+          "bm25_top3": [
+            "inkwell-setup-md#c0@9.730",
+            "inkwell-readme-md#c0@4.673",
+            "pantrypal-limits-md#c1@4.365"
+          ],
+          "bm25_hit1": 1,
+          "bm25_hit3": 1
+        },
+        {
+          "id": "q15",
+          "category": "identifier",
+          "query": "What env var points at the inventory database?",
+          "gold": [
+            "pantrypal-setup-md#c1"
+          ],
+          "bm25_abstained": false,
+          "bm25_top3": [
+            "pantrypal-setup-md#c1@2.954",
+            "pantrypal-readme-md#c0@2.697",
+            "trailmend-tests-md#c3@2.664"
+          ],
+          "bm25_hit1": 1,
+          "bm25_hit3": 1
+        },
+        {
+          "id": "q16",
+          "category": "identifier",
+          "query": "Which issue tracks the failing TrailMend tests?",
+          "gold": [
+            "trailmend-tests-md#c2"
+          ],
+          "bm25_abstained": false,
+          "bm25_top3": [
+            "trailmend-tests-md#c2@7.008",
+            "pantrypal-tests-md#c2@5.220",
+            "trailmend-limits-md#c0@3.865"
+          ],
+          "bm25_hit1": 1,
+          "bm25_hit3": 1
+        },
+        {
+          "id": "q17",
+          "category": "negation",
+          "query": "Does TrailMend route planning work without internet?",
+          "gold": [
+            "trailmend-limits-md#c0"
+          ],
+          "bm25_abstained": false,
+          "bm25_top3": [
+            "trailmend-readme-md#c0@8.394",
+            "trailmend-limits-md#c0@7.501",
+            "pantrypal-limits-md#c1@2.927"
+          ],
+          "bm25_hit1": 0,
+          "bm25_hit3": 1
+        },
+        {
+          "id": "q18",
+          "category": "negation",
+          "query": "Can PantryPal scan barcodes over plain HTTP on a LAN?",
+          "gold": [
+            "pantrypal-limits-md#c2"
+          ],
+          "bm25_abstained": false,
+          "bm25_top3": [
+            "pantrypal-limits-md#c2@15.533",
+            "pantrypal-readme-md#c0@6.308",
+            "pantrypal-readme-md#c2@5.580"
+          ],
+          "bm25_hit1": 1,
+          "bm25_hit3": 1
+        },
+        {
+          "id": "q19",
+          "category": "negation",
+          "query": "Are Inkwell file names private from the relay?",
+          "gold": [
+            "inkwell-limits-md#c0"
+          ],
+          "bm25_abstained": false,
+          "bm25_top3": [
+            "inkwell-limits-md#c0@8.904",
+            "inkwell-setup-md#c2@6.241",
+            "inkwell-readme-md#c0@6.072"
+          ],
+          "bm25_hit1": 1,
+          "bm25_hit3": 1
+        },
+        {
+          "id": "q20",
+          "category": "negation",
+          "query": "Does local sync work across the internet?",
+          "gold": [
+            "pantrypal-limits-md#c1"
+          ],
+          "bm25_abstained": false,
+          "bm25_top3": [
+            "pantrypal-limits-md#c1@4.943",
+            "pantrypal-readme-md#c1@3.969",
+            "trailmend-limits-md#c2@2.919"
+          ],
+          "bm25_hit1": 1,
+          "bm25_hit3": 1
+        },
+        {
+          "id": "q21",
+          "category": "negation",
+          "query": "Is there an Inkwell mobile client?",
+          "gold": [
+            "inkwell-limits-md#c1"
+          ],
+          "bm25_abstained": false,
+          "bm25_top3": [
+            "inkwell-limits-md#c1@5.788",
+            "inkwell-readme-md#c2@4.984",
+            "pantrypal-limits-md#c1@3.760"
+          ],
+          "bm25_hit1": 1,
+          "bm25_hit3": 1
+        },
+        {
+          "id": "q22",
+          "category": "negation",
+          "query": "Does the conflict merge keep both edits?",
+          "gold": [
+            "inkwell-limits-md#c1"
+          ],
+          "bm25_abstained": false,
+          "bm25_top3": [
+            "pantrypal-limits-md#c1@8.915",
+            "inkwell-limits-md#c1@7.735",
+            "trailmend-tests-md#c2@3.275"
+          ],
+          "bm25_hit1": 0,
+          "bm25_hit3": 1
+        },
+        {
+          "id": "q23",
+          "category": "negation",
+          "query": "Will TrailMend show an elevation profile for a hike in Japan?",
+          "gold": [
+            "trailmend-limits-md#c1"
+          ],
+          "bm25_abstained": false,
+          "bm25_top3": [
+            "trailmend-limits-md#c1@11.865",
+            "trailmend-readme-md#c0@10.340",
+            "trailmend-setup-md#c3@6.457"
+          ],
+          "bm25_hit1": 1,
+          "bm25_hit3": 1
+        },
+        {
+          "id": "q24",
+          "category": "negation",
+          "query": "Does the hiking time estimate handle snowy trails?",
+          "gold": [
+            "trailmend-limits-md#c2"
+          ],
+          "bm25_abstained": false,
+          "bm25_top3": [
+            "trailmend-readme-md#c1@5.322",
+            "pantrypal-limits-md#c1@3.413",
+            "trailmend-limits-md#c2@2.919"
+          ],
+          "bm25_hit1": 0,
+          "bm25_hit3": 1
+        },
+        {
+          "id": "q25",
+          "category": "numbers",
+          "query": "How many TrailMend tests fail?",
+          "gold": [
+            "trailmend-tests-md#c1",
+            "trailmend-tests-md#c2"
+          ],
+          "bm25_abstained": false,
+          "bm25_top3": [
+            "pantrypal-tests-md#c2@2.898",
+            "trailmend-setup-md#c0@2.610",
+            "trailmend-tests-md#c0@2.554"
+          ],
+          "bm25_hit1": 0,
+          "bm25_hit3": 0
+        },
+        {
+          "id": "q26",
+          "category": "numbers",
+          "query": "What size limit applies to a single note?",
+          "gold": [
+            "inkwell-limits-md#c0"
+          ],
+          "bm25_abstained": false,
+          "bm25_top3": [
+            "pantrypal-readme-md#c2@5.309",
+            "inkwell-limits-md#c1@3.489",
+            "inkwell-readme-md#c0@3.274"
+          ],
+          "bm25_hit1": 0,
+          "bm25_hit3": 0
+        },
+        {
+          "id": "q27",
+          "category": "numbers",
+          "query": "How many PantryPal tests were skipped?",
+          "gold": [
+            "pantrypal-tests-md#c1"
+          ],
+          "bm25_abstained": false,
+          "bm25_top3": [
+            "pantrypal-tests-md#c2@7.951",
+            "pantrypal-tests-md#c1@3.591",
+            "pantrypal-setup-md#c0@3.195"
+          ],
+          "bm25_hit1": 0,
+          "bm25_hit3": 1
+        },
+        {
+          "id": "q28",
+          "category": "numbers",
+          "query": "How far ahead do expiry alerts fire?",
+          "gold": [
+            "pantrypal-readme-md#c1"
+          ],
+          "bm25_abstained": false,
+          "bm25_top3": [
+            "pantrypal-readme-md#c1@5.195",
+            "inkwell-limits-md#c1@2.346",
+            "inkwell-limits-md#c0@0.000"
+          ],
+          "bm25_hit1": 1,
+          "bm25_hit3": 1
+        },
+        {
+          "id": "q29",
+          "category": "numbers",
+          "query": "How much disk does the tile bundle need?",
+          "gold": [
+            "trailmend-setup-md#c1"
+          ],
+          "bm25_abstained": false,
+          "bm25_top3": [
+            "trailmend-setup-md#c1@6.382",
+            "trailmend-limits-md#c0@4.968",
+            "pantrypal-limits-md#c1@3.413"
+          ],
+          "bm25_hit1": 1,
+          "bm25_hit3": 1
+        },
+        {
+          "id": "q30",
+          "category": "numbers",
+          "query": "How often does Inkwell sync?",
+          "gold": [
+            "inkwell-readme-md#c1"
+          ],
+          "bm25_abstained": false,
+          "bm25_top3": [
+            "inkwell-readme-md#c0@4.695",
+            "pantrypal-limits-md#c1@4.457",
+            "inkwell-tests-md#c0@4.112"
+          ],
+          "bm25_hit1": 0,
+          "bm25_hit3": 0
+        },
+        {
+          "id": "q31",
+          "category": "numbers",
+          "query": "What is TrailMend's line coverage?",
+          "gold": [
+            "trailmend-tests-md#c3"
+          ],
+          "bm25_abstained": false,
+          "bm25_top3": [
+            "pantrypal-tests-md#c3@4.206",
+            "trailmend-tests-md#c3@3.570",
+            "trailmend-readme-md#c2@1.160"
+          ],
+          "bm25_hit1": 0,
+          "bm25_hit3": 1
+        },
+        {
+          "id": "q32",
+          "category": "numbers",
+          "query": "How many notes were in the Inkwell soak test?",
+          "gold": [
+            "inkwell-tests-md#c2"
+          ],
+          "bm25_abstained": false,
+          "bm25_top3": [
+            "inkwell-tests-md#c3@8.244",
+            "inkwell-readme-md#c0@5.857",
+            "inkwell-tests-md#c0@5.353"
+          ],
+          "bm25_hit1": 0,
+          "bm25_hit3": 0
+        },
+        {
+          "id": "q33",
+          "category": "no_answer",
+          "query": "Does PantryPal have a French language mode?",
+          "gold": [],
+          "bm25_abstained": false,
+          "bm25_top3": [
+            "trailmend-limits-md#c0@3.475",
+            "pantrypal-readme-md#c0@3.276",
+            "pantrypal-setup-md#c0@3.195"
+          ]
+        },
+        {
+          "id": "q34",
+          "category": "no_answer",
+          "query": "What database does TrailMend use for user accounts?",
+          "gold": [],
+          "bm25_abstained": false,
+          "bm25_top3": [
+            "trailmend-readme-md#c0@4.651",
+            "trailmend-limits-md#c2@4.149",
+            "pantrypal-limits-md#c1@2.927"
+          ]
+        },
+        {
+          "id": "q35",
+          "category": "no_answer",
+          "query": "Can Inkwell sync to Google Drive?",
+          "gold": [],
+          "bm25_abstained": false,
+          "bm25_top3": [
+            "inkwell-setup-md#c2@5.062",
+            "inkwell-limits-md#c2@4.837",
+            "inkwell-readme-md#c0@4.695"
+          ]
+        },
+        {
+          "id": "q36",
+          "category": "no_answer",
+          "query": "What is the refund policy for the TrailMend Pro plan?",
+          "gold": [],
+          "bm25_abstained": false,
+          "bm25_top3": [
+            "trailmend-readme-md#c0@5.747",
+            "trailmend-readme-md#c2@4.185",
+            "trailmend-limits-md#c0@3.079"
+          ]
+        },
+        {
+          "id": "q37",
+          "category": "no_answer",
+          "query": "Does PantryPal track nutrition macros?",
+          "gold": [],
+          "bm25_abstained": false,
+          "bm25_top3": [
+            "pantrypal-setup-md#c0@3.195",
+            "pantrypal-limits-md#c1@2.927",
+            "pantrypal-readme-md#c0@2.471"
+          ]
+        },
+        {
+          "id": "q38",
+          "category": "no_answer",
+          "query": "What encryption does TrailMend use for GPX files?",
+          "gold": [],
+          "bm25_abstained": false,
+          "bm25_top3": [
+            "trailmend-readme-md#c0@8.866",
+            "trailmend-limits-md#c0@4.273",
+            "trailmend-limits-md#c2@4.149"
+          ]
+        },
+        {
+          "id": "q39",
+          "category": "no_answer",
+          "query": "Is there a dark mode in PantryPal?",
+          "gold": [],
+          "bm25_abstained": false,
+          "bm25_top3": [
+            "pantrypal-readme-md#c2@4.257",
+            "trailmend-limits-md#c0@4.183",
+            "pantrypal-readme-md#c0@4.005"
+          ]
+        },
+        {
+          "id": "q40",
+          "category": "no_answer",
+          "query": "How many contributors maintain Inkwell?",
+          "gold": [],
+          "bm25_abstained": false,
+          "bm25_top3": [
+            "inkwell-setup-md#c0@2.471",
+            "inkwell-readme-md#c0@2.416",
+            "inkwell-tests-md#c0@2.292"
+          ]
+        },
+        {
+          "id": "q41",
+          "category": "cross_project",
+          "query": "Which project fails a retry timing test?",
+          "gold": [
+            "inkwell-tests-md#c1"
+          ],
+          "bm25_abstained": false,
+          "bm25_top3": [
+            "inkwell-tests-md#c2@5.689",
+            "trailmend-limits-md#c2@3.374",
+            "trailmend-tests-md#c0@3.104"
+          ],
+          "bm25_hit1": 0,
+          "bm25_hit3": 0
+        },
+        {
+          "id": "q42",
+          "category": "cross_project",
+          "query": "Which app listens on port 4173?",
+          "gold": [
+            "trailmend-setup-md#c2"
+          ],
+          "bm25_abstained": false,
+          "bm25_top3": [
+            "trailmend-setup-md#c2@7.463",
+            "inkwell-setup-md#c0@4.932",
+            "pantrypal-limits-md#c2@3.829"
+          ],
+          "bm25_hit1": 1,
+          "bm25_hit3": 1
+        },
+        {
+          "id": "q43",
+          "category": "cross_project",
+          "query": "Which project stores its data in SQLite?",
+          "gold": [
+            "pantrypal-readme-md#c2",
+            "trailmend-setup-md#c3"
+          ],
+          "bm25_abstained": false,
+          "bm25_top3": [
+            "pantrypal-readme-md#c2@6.478",
+            "trailmend-setup-md#c3@4.887",
+            "inkwell-readme-md#c0@3.998"
+          ],
+          "bm25_hit1": 1,
+          "bm25_hit3": 1
+        },
+        {
+          "id": "q44",
+          "category": "cross_project",
+          "query": "Which tool uses end-to-end encryption?",
+          "gold": [
+            "inkwell-readme-md#c0"
+          ],
+          "bm25_abstained": false,
+          "bm25_top3": [
+            "inkwell-readme-md#c0@5.883",
+            "inkwell-tests-md#c2@5.112",
+            "pantrypal-readme-md#c0@2.564"
+          ],
+          "bm25_hit1": 1,
+          "bm25_hit3": 1
+        },
+        {
+          "id": "q45",
+          "category": "cross_project",
+          "query": "Which project warns about expiring items?",
+          "gold": [
+            "pantrypal-readme-md#c1"
+          ],
+          "bm25_abstained": false,
+          "bm25_top3": [
+            "pantrypal-readme-md#c0@3.033",
+            "pantrypal-setup-md#c1@2.689",
+            "trailmend-setup-md#c2@2.282"
+          ],
+          "bm25_hit1": 0,
+          "bm25_hit3": 0
+        },
+        {
+          "id": "q46",
+          "category": "cross_project",
+          "query": "Which project has a 2 MB file cap?",
+          "gold": [
+            "inkwell-limits-md#c0"
+          ],
+          "bm25_abstained": false,
+          "bm25_top3": [
+            "inkwell-limits-md#c0@5.979",
+            "trailmend-setup-md#c3@4.975",
+            "pantrypal-readme-md#c2@4.600"
+          ],
+          "bm25_hit1": 1,
+          "bm25_hit3": 1
+        },
+        {
+          "id": "q47",
+          "category": "cross_project",
+          "query": "Which project's tests were run on two machines?",
+          "gold": [
+            "pantrypal-tests-md#c1",
+            "inkwell-tests-md#c2"
+          ],
+          "bm25_abstained": false,
+          "bm25_top3": [
+            "pantrypal-tests-md#c2@12.417",
+            "trailmend-setup-md#c2@3.385",
+            "inkwell-tests-md#c2@2.806"
+          ],
+          "bm25_hit1": 0,
+          "bm25_hit3": 1
+        },
+        {
+          "id": "q48",
+          "category": "cross_project",
+          "query": "Which app needs a camera?",
+          "gold": [
+            "pantrypal-readme-md#c0",
+            "pantrypal-setup-md#c2"
+          ],
+          "bm25_abstained": false,
+          "bm25_top3": [
+            "pantrypal-limits-md#c2@8.552",
+            "pantrypal-readme-md#c0@4.902",
+            "trailmend-readme-md#c0@3.020"
+          ],
+          "bm25_hit1": 0,
+          "bm25_hit3": 1
+        }
+      ]
+    },
+    {
+      "method": "semantic",
+      "answerable": {
+        "n": 40,
+        "hit1_n": 23,
+        "hit3_n": 29,
+        "hit1": 0.575,
+        "hit3": 0.725,
+        "mrr": 0.694
+      },
+      "abstention": {
+        "n_no_answer": 8,
+        "correct": 0,
+        "missed": 8,
+        "false_abstains": 0,
+        "precision": null,
+        "recall": 0
+      },
+      "per_category": {
+        "paraphrase": {
+          "n": 8,
+          "hit1": 0.625,
+          "hit3": 0.875,
+          "mrr": 0.781,
+          "abstain_ok": null
+        },
+        "identifier": {
+          "n": 8,
+          "hit1": 0.75,
+          "hit3": 0.875,
+          "mrr": 0.822,
+          "abstain_ok": null
+        },
+        "negation": {
+          "n": 8,
+          "hit1": 0.375,
+          "hit3": 0.5,
+          "mrr": 0.536,
+          "abstain_ok": null
+        },
+        "numbers": {
+          "n": 8,
+          "hit1": 0.625,
+          "hit3": 0.625,
+          "mrr": 0.686,
+          "abstain_ok": null
+        },
+        "no_answer": {
+          "n": 8,
+          "hit1": null,
+          "hit3": null,
+          "mrr": null,
+          "abstain_ok": "0/8"
+        },
+        "cross_project": {
+          "n": 8,
+          "hit1": 0.5,
+          "hit3": 0.75,
+          "mrr": 0.646,
+          "abstain_ok": null
+        }
+      },
+      "failures": [
+        {
+          "q": "q02",
+          "expected": "inkwell-readme-md#c0",
+          "got": "inkwell-setup-md#c0, inkwell-tests-md#c2, inkwell-limits-md#c1",
+          "note": "gold at rank 4"
+        },
+        {
+          "q": "q03",
+          "expected": "pantrypal-readme-md#c2",
+          "got": "pantrypal-setup-md#c1, pantrypal-readme-md#c2, pantrypal-readme-md#c0",
+          "note": "gold at rank 2"
+        },
+        {
+          "q": "q07",
+          "expected": "inkwell-readme-md#c1 | inkwell-limits-md#c1",
+          "got": "inkwell-tests-md#c3, inkwell-limits-md#c1, inkwell-readme-md#c1",
+          "note": "gold at rank 2"
+        },
+        {
+          "q": "q15",
+          "expected": "pantrypal-setup-md#c1",
+          "got": "pantrypal-readme-md#c2, pantrypal-setup-md#c1, pantrypal-limits-md#c0",
+          "note": "gold at rank 2"
+        },
+        {
+          "q": "q16",
+          "expected": "trailmend-tests-md#c2",
+          "got": "trailmend-tests-md#c0, trailmend-tests-md#c1, trailmend-setup-md#c0",
+          "note": "gold at rank 13"
+        },
+        {
+          "q": "q18",
+          "expected": "pantrypal-limits-md#c2",
+          "got": "pantrypal-readme-md#c0, pantrypal-limits-md#c0, pantrypal-setup-md#c2",
+          "note": "gold at rank 4"
+        },
+        {
+          "q": "q19",
+          "expected": "inkwell-limits-md#c0",
+          "got": "inkwell-readme-md#c0, inkwell-setup-md#c0, inkwell-setup-md#c1",
+          "note": "gold at rank 4"
+        },
+        {
+          "q": "q21",
+          "expected": "inkwell-limits-md#c1",
+          "got": "inkwell-readme-md#c2, inkwell-readme-md#c0, inkwell-limits-md#c0",
+          "note": "gold at rank 11"
+        },
+        {
+          "q": "q23",
+          "expected": "trailmend-limits-md#c1",
+          "got": "trailmend-readme-md#c0, trailmend-limits-md#c1, trailmend-limits-md#c0",
+          "note": "gold at rank 2"
+        },
+        {
+          "q": "q24",
+          "expected": "trailmend-limits-md#c2",
+          "got": "trailmend-readme-md#c1, trailmend-readme-md#c0, trailmend-limits-md#c0",
+          "note": "gold at rank 5"
+        },
+        {
+          "q": "q27",
+          "expected": "pantrypal-tests-md#c1",
+          "got": "trailmend-tests-md#c1, pantrypal-tests-md#c2, pantrypal-tests-md#c0",
+          "note": "gold at rank 5"
+        },
+        {
+          "q": "q31",
+          "expected": "trailmend-tests-md#c3",
+          "got": "trailmend-readme-md#c0, trailmend-tests-md#c0, trailmend-limits-md#c0",
+          "note": "gold at rank 4"
+        },
+        {
+          "q": "q32",
+          "expected": "inkwell-tests-md#c2",
+          "got": "inkwell-tests-md#c3, inkwell-tests-md#c0, inkwell-setup-md#c2",
+          "note": "gold at rank 26"
+        },
+        {
+          "q": "q33",
+          "expected": "(abstain)",
+          "got": "pantrypal-readme-md#c0",
+          "note": "false positive on a no-answer question"
+        },
+        {
+          "q": "q34",
+          "expected": "(abstain)",
+          "got": "trailmend-readme-md#c0",
+          "note": "false positive on a no-answer question"
+        },
+        {
+          "q": "q35",
+          "expected": "(abstain)",
+          "got": "inkwell-readme-md#c0",
+          "note": "false positive on a no-answer question"
+        },
+        {
+          "q": "q36",
+          "expected": "(abstain)",
+          "got": "trailmend-readme-md#c2",
+          "note": "false positive on a no-answer question"
+        },
+        {
+          "q": "q37",
+          "expected": "(abstain)",
+          "got": "pantrypal-readme-md#c0",
+          "note": "false positive on a no-answer question"
+        },
+        {
+          "q": "q38",
+          "expected": "(abstain)",
+          "got": "trailmend-readme-md#c0",
+          "note": "false positive on a no-answer question"
+        },
+        {
+          "q": "q39",
+          "expected": "(abstain)",
+          "got": "pantrypal-readme-md#c0",
+          "note": "false positive on a no-answer question"
+        },
+        {
+          "q": "q40",
+          "expected": "(abstain)",
+          "got": "inkwell-readme-md#c2",
+          "note": "false positive on a no-answer question"
+        },
+        {
+          "q": "q41",
+          "expected": "inkwell-tests-md#c1",
+          "got": "inkwell-tests-md#c2, trailmend-tests-md#c1, inkwell-tests-md#c3",
+          "note": "gold at rank 11"
+        },
+        {
+          "q": "q46",
+          "expected": "inkwell-limits-md#c0",
+          "got": "trailmend-setup-md#c3, inkwell-limits-md#c0, trailmend-setup-md#c2",
+          "note": "gold at rank 2"
+        },
+        {
+          "q": "q47",
+          "expected": "pantrypal-tests-md#c1 | inkwell-tests-md#c2",
+          "got": "trailmend-tests-md#c1, inkwell-tests-md#c3, pantrypal-tests-md#c2",
+          "note": "gold at rank 13"
+        },
+        {
+          "q": "q48",
+          "expected": "pantrypal-readme-md#c0 | pantrypal-setup-md#c2",
+          "got": "pantrypal-limits-md#c2, pantrypal-setup-md#c2, pantrypal-readme-md#c1",
+          "note": "gold at rank 2"
+        }
+      ],
+      "rows": [
+        {
+          "id": "q01",
+          "category": "paraphrase",
+          "query": "Can I use the trail planner on a plane with no signal?",
+          "gold": [
+            "trailmend-limits-md#c0",
+            "trailmend-readme-md#c0"
+          ],
+          "semantic_abstained": false,
+          "semantic_top3": [
+            "trailmend-limits-md#c0@0.486",
+            "trailmend-readme-md#c0@0.381",
+            "trailmend-readme-md#c1@0.381"
+          ],
+          "semantic_hit1": 1,
+          "semantic_hit3": 1
+        },
+        {
+          "id": "q02",
+          "category": "paraphrase",
+          "query": "Could the company hosting the relay read what I write?",
+          "gold": [
+            "inkwell-readme-md#c0"
+          ],
+          "semantic_abstained": false,
+          "semantic_top3": [
+            "inkwell-setup-md#c0@0.383",
+            "inkwell-tests-md#c2@0.364",
+            "inkwell-limits-md#c1@0.357"
+          ],
+          "semantic_hit1": 0,
+          "semantic_hit3": 0
+        },
+        {
+          "id": "q03",
+          "category": "paraphrase",
+          "query": "How do I get my grocery data into a spreadsheet?",
+          "gold": [
+            "pantrypal-readme-md#c2"
+          ],
+          "semantic_abstained": false,
+          "semantic_top3": [
+            "pantrypal-setup-md#c1@0.375",
+            "pantrypal-readme-md#c2@0.358",
+            "pantrypal-readme-md#c0@0.247"
+          ],
+          "semantic_hit1": 0,
+          "semantic_hit3": 1
+        },
+        {
+          "id": "q04",
+          "category": "paraphrase",
+          "query": "Will it warn me before the milk goes bad?",
+          "gold": [
+            "pantrypal-readme-md#c1"
+          ],
+          "semantic_abstained": false,
+          "semantic_top3": [
+            "pantrypal-readme-md#c1@0.277",
+            "pantrypal-readme-md#c0@0.258",
+            "pantrypal-tests-md#c0@0.156"
+          ],
+          "semantic_hit1": 1,
+          "semantic_hit3": 1
+        },
+        {
+          "id": "q05",
+          "category": "paraphrase",
+          "query": "How long will my hike take?",
+          "gold": [
+            "trailmend-readme-md#c1"
+          ],
+          "semantic_abstained": false,
+          "semantic_top3": [
+            "trailmend-readme-md#c1@0.563",
+            "trailmend-readme-md#c0@0.325",
+            "trailmend-setup-md#c1@0.319"
+          ],
+          "semantic_hit1": 1,
+          "semantic_hit3": 1
+        },
+        {
+          "id": "q06",
+          "category": "paraphrase",
+          "query": "Can two people share one shopping list at home?",
+          "gold": [
+            "pantrypal-readme-md#c1"
+          ],
+          "semantic_abstained": false,
+          "semantic_top3": [
+            "pantrypal-readme-md#c1@0.325",
+            "pantrypal-readme-md#c2@0.303",
+            "pantrypal-readme-md#c0@0.236"
+          ],
+          "semantic_hit1": 1,
+          "semantic_hit3": 1
+        },
+        {
+          "id": "q07",
+          "category": "paraphrase",
+          "query": "What happens when the same note is edited on two laptops at once?",
+          "gold": [
+            "inkwell-readme-md#c1",
+            "inkwell-limits-md#c1"
+          ],
+          "semantic_abstained": false,
+          "semantic_top3": [
+            "inkwell-tests-md#c3@0.456",
+            "inkwell-limits-md#c1@0.445",
+            "inkwell-readme-md#c1@0.441"
+          ],
+          "semantic_hit1": 0,
+          "semantic_hit3": 1
+        },
+        {
+          "id": "q08",
+          "category": "paraphrase",
+          "query": "Can I send my trip plan to a friend as a document?",
+          "gold": [
+            "trailmend-readme-md#c2"
+          ],
+          "semantic_abstained": false,
+          "semantic_top3": [
+            "trailmend-readme-md#c2@0.423",
+            "trailmend-limits-md#c0@0.205",
+            "trailmend-limits-md#c2@0.199"
+          ],
+          "semantic_hit1": 1,
+          "semantic_hit3": 1
+        },
+        {
+          "id": "q09",
+          "category": "identifier",
+          "query": "What does TRAILMEND_TILE_DIR configure?",
+          "gold": [
+            "trailmend-setup-md#c1"
+          ],
+          "semantic_abstained": false,
+          "semantic_top3": [
+            "trailmend-setup-md#c1@0.608",
+            "trailmend-setup-md#c0@0.594",
+            "trailmend-readme-md#c0@0.582"
+          ],
+          "semantic_hit1": 1,
+          "semantic_hit3": 1
+        },
+        {
+          "id": "q10",
+          "category": "identifier",
+          "query": "Which port does the pantry web UI use?",
+          "gold": [
+            "pantrypal-setup-md#c2"
+          ],
+          "semantic_abstained": false,
+          "semantic_top3": [
+            "pantrypal-setup-md#c2@0.476",
+            "pantrypal-readme-md#c0@0.414",
+            "pantrypal-setup-md#c0@0.412"
+          ],
+          "semantic_hit1": 1,
+          "semantic_hit3": 1
+        },
+        {
+          "id": "q11",
+          "category": "identifier",
+          "query": "Where is INKWELL_KEY used?",
+          "gold": [
+            "inkwell-setup-md#c1"
+          ],
+          "semantic_abstained": false,
+          "semantic_top3": [
+            "inkwell-setup-md#c1@0.492",
+            "inkwell-readme-md#c0@0.484",
+            "inkwell-readme-md#c2@0.425"
+          ],
+          "semantic_hit1": 1,
+          "semantic_hit3": 1
+        },
+        {
+          "id": "q12",
+          "category": "identifier",
+          "query": "How big is the elevation database file?",
+          "gold": [
+            "trailmend-setup-md#c3"
+          ],
+          "semantic_abstained": false,
+          "semantic_top3": [
+            "trailmend-setup-md#c3@0.654",
+            "trailmend-limits-md#c1@0.341",
+            "trailmend-tests-md#c3@0.299"
+          ],
+          "semantic_hit1": 1,
+          "semantic_hit3": 1
+        },
+        {
+          "id": "q13",
+          "category": "identifier",
+          "query": "What is the name of the failing GPX test?",
+          "gold": [
+            "trailmend-tests-md#c2"
+          ],
+          "semantic_abstained": false,
+          "semantic_top3": [
+            "trailmend-tests-md#c2@0.529",
+            "trailmend-tests-md#c1@0.481",
+            "inkwell-tests-md#c1@0.368"
+          ],
+          "semantic_hit1": 1,
+          "semantic_hit3": 1
+        },
+        {
+          "id": "q14",
+          "category": "identifier",
+          "query": "Which port does the Inkwell relay listen on?",
+          "gold": [
+            "inkwell-setup-md#c0"
+          ],
+          "semantic_abstained": false,
+          "semantic_top3": [
+            "inkwell-setup-md#c0@0.567",
+            "inkwell-setup-md#c1@0.484",
+            "inkwell-readme-md#c2@0.442"
+          ],
+          "semantic_hit1": 1,
+          "semantic_hit3": 1
+        },
+        {
+          "id": "q15",
+          "category": "identifier",
+          "query": "What env var points at the inventory database?",
+          "gold": [
+            "pantrypal-setup-md#c1"
+          ],
+          "semantic_abstained": false,
+          "semantic_top3": [
+            "pantrypal-readme-md#c2@0.335",
+            "pantrypal-setup-md#c1@0.323",
+            "pantrypal-limits-md#c0@0.290"
+          ],
+          "semantic_hit1": 0,
+          "semantic_hit3": 1
+        },
+        {
+          "id": "q16",
+          "category": "identifier",
+          "query": "Which issue tracks the failing TrailMend tests?",
+          "gold": [
+            "trailmend-tests-md#c2"
+          ],
+          "semantic_abstained": false,
+          "semantic_top3": [
+            "trailmend-tests-md#c0@0.669",
+            "trailmend-tests-md#c1@0.480",
+            "trailmend-setup-md#c0@0.453"
+          ],
+          "semantic_hit1": 0,
+          "semantic_hit3": 0
+        },
+        {
+          "id": "q17",
+          "category": "negation",
+          "query": "Does TrailMend route planning work without internet?",
+          "gold": [
+            "trailmend-limits-md#c0"
+          ],
+          "semantic_abstained": false,
+          "semantic_top3": [
+            "trailmend-limits-md#c0@0.649",
+            "trailmend-readme-md#c0@0.603",
+            "trailmend-readme-md#c1@0.470"
+          ],
+          "semantic_hit1": 1,
+          "semantic_hit3": 1
+        },
+        {
+          "id": "q18",
+          "category": "negation",
+          "query": "Can PantryPal scan barcodes over plain HTTP on a LAN?",
+          "gold": [
+            "pantrypal-limits-md#c2"
+          ],
+          "semantic_abstained": false,
+          "semantic_top3": [
+            "pantrypal-readme-md#c0@0.527",
+            "pantrypal-limits-md#c0@0.461",
+            "pantrypal-setup-md#c2@0.416"
+          ],
+          "semantic_hit1": 0,
+          "semantic_hit3": 0
+        },
+        {
+          "id": "q19",
+          "category": "negation",
+          "query": "Are Inkwell file names private from the relay?",
+          "gold": [
+            "inkwell-limits-md#c0"
+          ],
+          "semantic_abstained": false,
+          "semantic_top3": [
+            "inkwell-readme-md#c0@0.488",
+            "inkwell-setup-md#c0@0.483",
+            "inkwell-setup-md#c1@0.471"
+          ],
+          "semantic_hit1": 0,
+          "semantic_hit3": 0
+        },
+        {
+          "id": "q20",
+          "category": "negation",
+          "query": "Does local sync work across the internet?",
+          "gold": [
+            "pantrypal-limits-md#c1"
+          ],
+          "semantic_abstained": false,
+          "semantic_top3": [
+            "pantrypal-limits-md#c1@0.619",
+            "inkwell-limits-md#c2@0.461",
+            "pantrypal-readme-md#c1@0.364"
+          ],
+          "semantic_hit1": 1,
+          "semantic_hit3": 1
+        },
+        {
+          "id": "q21",
+          "category": "negation",
+          "query": "Is there an Inkwell mobile client?",
+          "gold": [
+            "inkwell-limits-md#c1"
+          ],
+          "semantic_abstained": false,
+          "semantic_top3": [
+            "inkwell-readme-md#c2@0.649",
+            "inkwell-readme-md#c0@0.464",
+            "inkwell-limits-md#c0@0.377"
+          ],
+          "semantic_hit1": 0,
+          "semantic_hit3": 0
+        },
+        {
+          "id": "q22",
+          "category": "negation",
+          "query": "Does the conflict merge keep both edits?",
+          "gold": [
+            "inkwell-limits-md#c1"
+          ],
+          "semantic_abstained": false,
+          "semantic_top3": [
+            "inkwell-limits-md#c1@0.562",
+            "inkwell-readme-md#c1@0.560",
+            "pantrypal-limits-md#c1@0.246"
+          ],
+          "semantic_hit1": 1,
+          "semantic_hit3": 1
+        },
+        {
+          "id": "q23",
+          "category": "negation",
+          "query": "Will TrailMend show an elevation profile for a hike in Japan?",
+          "gold": [
+            "trailmend-limits-md#c1"
+          ],
+          "semantic_abstained": false,
+          "semantic_top3": [
+            "trailmend-readme-md#c0@0.520",
+            "trailmend-limits-md#c1@0.466",
+            "trailmend-limits-md#c0@0.427"
+          ],
+          "semantic_hit1": 0,
+          "semantic_hit3": 1
+        },
+        {
+          "id": "q24",
+          "category": "negation",
+          "query": "Does the hiking time estimate handle snowy trails?",
+          "gold": [
+            "trailmend-limits-md#c2"
+          ],
+          "semantic_abstained": false,
+          "semantic_top3": [
+            "trailmend-readme-md#c1@0.521",
+            "trailmend-readme-md#c0@0.376",
+            "trailmend-limits-md#c0@0.349"
+          ],
+          "semantic_hit1": 0,
+          "semantic_hit3": 0
+        },
+        {
+          "id": "q25",
+          "category": "numbers",
+          "query": "How many TrailMend tests fail?",
+          "gold": [
+            "trailmend-tests-md#c1",
+            "trailmend-tests-md#c2"
+          ],
+          "semantic_abstained": false,
+          "semantic_top3": [
+            "trailmend-tests-md#c1@0.608",
+            "trailmend-tests-md#c0@0.603",
+            "trailmend-setup-md#c0@0.413"
+          ],
+          "semantic_hit1": 1,
+          "semantic_hit3": 1
+        },
+        {
+          "id": "q26",
+          "category": "numbers",
+          "query": "What size limit applies to a single note?",
+          "gold": [
+            "inkwell-limits-md#c0"
+          ],
+          "semantic_abstained": false,
+          "semantic_top3": [
+            "inkwell-limits-md#c0@0.449",
+            "inkwell-tests-md#c3@0.318",
+            "inkwell-setup-md#c2@0.233"
+          ],
+          "semantic_hit1": 1,
+          "semantic_hit3": 1
+        },
+        {
+          "id": "q27",
+          "category": "numbers",
+          "query": "How many PantryPal tests were skipped?",
+          "gold": [
+            "pantrypal-tests-md#c1"
+          ],
+          "semantic_abstained": false,
+          "semantic_top3": [
+            "trailmend-tests-md#c1@0.524",
+            "pantrypal-tests-md#c2@0.504",
+            "pantrypal-tests-md#c0@0.488"
+          ],
+          "semantic_hit1": 0,
+          "semantic_hit3": 0
+        },
+        {
+          "id": "q28",
+          "category": "numbers",
+          "query": "How far ahead do expiry alerts fire?",
+          "gold": [
+            "pantrypal-readme-md#c1"
+          ],
+          "semantic_abstained": false,
+          "semantic_top3": [
+            "pantrypal-readme-md#c1@0.610",
+            "pantrypal-tests-md#c3@0.467",
+            "pantrypal-readme-md#c0@0.265"
+          ],
+          "semantic_hit1": 1,
+          "semantic_hit3": 1
+        },
+        {
+          "id": "q29",
+          "category": "numbers",
+          "query": "How much disk does the tile bundle need?",
+          "gold": [
+            "trailmend-setup-md#c1"
+          ],
+          "semantic_abstained": false,
+          "semantic_top3": [
+            "trailmend-setup-md#c1@0.446",
+            "trailmend-readme-md#c1@0.439",
+            "trailmend-setup-md#c3@0.256"
+          ],
+          "semantic_hit1": 1,
+          "semantic_hit3": 1
+        },
+        {
+          "id": "q30",
+          "category": "numbers",
+          "query": "How often does Inkwell sync?",
+          "gold": [
+            "inkwell-readme-md#c1"
+          ],
+          "semantic_abstained": false,
+          "semantic_top3": [
+            "inkwell-readme-md#c1@0.614",
+            "inkwell-tests-md#c0@0.554",
+            "inkwell-readme-md#c0@0.533"
+          ],
+          "semantic_hit1": 1,
+          "semantic_hit3": 1
+        },
+        {
+          "id": "q31",
+          "category": "numbers",
+          "query": "What is TrailMend's line coverage?",
+          "gold": [
+            "trailmend-tests-md#c3"
+          ],
+          "semantic_abstained": false,
+          "semantic_top3": [
+            "trailmend-readme-md#c0@0.604",
+            "trailmend-tests-md#c0@0.535",
+            "trailmend-limits-md#c0@0.527"
+          ],
+          "semantic_hit1": 0,
+          "semantic_hit3": 0
+        },
+        {
+          "id": "q32",
+          "category": "numbers",
+          "query": "How many notes were in the Inkwell soak test?",
+          "gold": [
+            "inkwell-tests-md#c2"
+          ],
+          "semantic_abstained": false,
+          "semantic_top3": [
+            "inkwell-tests-md#c3@0.632",
+            "inkwell-tests-md#c0@0.459",
+            "inkwell-setup-md#c2@0.456"
+          ],
+          "semantic_hit1": 0,
+          "semantic_hit3": 0
+        },
+        {
+          "id": "q33",
+          "category": "no_answer",
+          "query": "Does PantryPal have a French language mode?",
+          "gold": [],
+          "semantic_abstained": false,
+          "semantic_top3": [
+            "pantrypal-readme-md#c0@0.483",
+            "pantrypal-setup-md#c0@0.368",
+            "pantrypal-limits-md#c0@0.358"
+          ]
+        },
+        {
+          "id": "q34",
+          "category": "no_answer",
+          "query": "What database does TrailMend use for user accounts?",
+          "gold": [],
+          "semantic_abstained": false,
+          "semantic_top3": [
+            "trailmend-readme-md#c0@0.626",
+            "trailmend-tests-md#c0@0.490",
+            "trailmend-setup-md#c0@0.469"
+          ]
+        },
+        {
+          "id": "q35",
+          "category": "no_answer",
+          "query": "Can Inkwell sync to Google Drive?",
+          "gold": [],
+          "semantic_abstained": false,
+          "semantic_top3": [
+            "inkwell-readme-md#c0@0.497",
+            "inkwell-readme-md#c2@0.493",
+            "inkwell-readme-md#c1@0.482"
+          ]
+        },
+        {
+          "id": "q36",
+          "category": "no_answer",
+          "query": "What is the refund policy for the TrailMend Pro plan?",
+          "gold": [],
+          "semantic_abstained": false,
+          "semantic_top3": [
+            "trailmend-readme-md#c2@0.378",
+            "trailmend-tests-md#c0@0.377",
+            "trailmend-readme-md#c0@0.351"
+          ]
+        },
+        {
+          "id": "q37",
+          "category": "no_answer",
+          "query": "Does PantryPal track nutrition macros?",
+          "gold": [],
+          "semantic_abstained": false,
+          "semantic_top3": [
+            "pantrypal-readme-md#c0@0.582",
+            "pantrypal-limits-md#c0@0.484",
+            "pantrypal-readme-md#c2@0.468"
+          ]
+        },
+        {
+          "id": "q38",
+          "category": "no_answer",
+          "query": "What encryption does TrailMend use for GPX files?",
+          "gold": [],
+          "semantic_abstained": false,
+          "semantic_top3": [
+            "trailmend-readme-md#c0@0.642",
+            "trailmend-limits-md#c0@0.558",
+            "trailmend-setup-md#c0@0.410"
+          ]
+        },
+        {
+          "id": "q39",
+          "category": "no_answer",
+          "query": "Is there a dark mode in PantryPal?",
+          "gold": [],
+          "semantic_abstained": false,
+          "semantic_top3": [
+            "pantrypal-readme-md#c0@0.521",
+            "pantrypal-setup-md#c0@0.361",
+            "pantrypal-readme-md#c2@0.331"
+          ]
+        },
+        {
+          "id": "q40",
+          "category": "no_answer",
+          "query": "How many contributors maintain Inkwell?",
+          "gold": [],
+          "semantic_abstained": false,
+          "semantic_top3": [
+            "inkwell-readme-md#c2@0.490",
+            "inkwell-readme-md#c0@0.409",
+            "inkwell-tests-md#c0@0.386"
+          ]
+        },
+        {
+          "id": "q41",
+          "category": "cross_project",
+          "query": "Which project fails a retry timing test?",
+          "gold": [
+            "inkwell-tests-md#c1"
+          ],
+          "semantic_abstained": false,
+          "semantic_top3": [
+            "inkwell-tests-md#c2@0.458",
+            "trailmend-tests-md#c1@0.393",
+            "inkwell-tests-md#c3@0.356"
+          ],
+          "semantic_hit1": 0,
+          "semantic_hit3": 0
+        },
+        {
+          "id": "q42",
+          "category": "cross_project",
+          "query": "Which app listens on port 4173?",
+          "gold": [
+            "trailmend-setup-md#c2"
+          ],
+          "semantic_abstained": false,
+          "semantic_top3": [
+            "trailmend-setup-md#c2@0.503",
+            "pantrypal-setup-md#c2@0.319",
+            "pantrypal-limits-md#c2@0.292"
+          ],
+          "semantic_hit1": 1,
+          "semantic_hit3": 1
+        },
+        {
+          "id": "q43",
+          "category": "cross_project",
+          "query": "Which project stores its data in SQLite?",
+          "gold": [
+            "pantrypal-readme-md#c2",
+            "trailmend-setup-md#c3"
+          ],
+          "semantic_abstained": false,
+          "semantic_top3": [
+            "trailmend-setup-md#c3@0.530",
+            "pantrypal-setup-md#c1@0.488",
+            "pantrypal-readme-md#c2@0.421"
+          ],
+          "semantic_hit1": 1,
+          "semantic_hit3": 1
+        },
+        {
+          "id": "q44",
+          "category": "cross_project",
+          "query": "Which tool uses end-to-end encryption?",
+          "gold": [
+            "inkwell-readme-md#c0"
+          ],
+          "semantic_abstained": false,
+          "semantic_top3": [
+            "inkwell-readme-md#c0@0.323",
+            "inkwell-limits-md#c0@0.290",
+            "inkwell-limits-md#c1@0.287"
+          ],
+          "semantic_hit1": 1,
+          "semantic_hit3": 1
+        },
+        {
+          "id": "q45",
+          "category": "cross_project",
+          "query": "Which project warns about expiring items?",
+          "gold": [
+            "pantrypal-readme-md#c1"
+          ],
+          "semantic_abstained": false,
+          "semantic_top3": [
+            "pantrypal-readme-md#c1@0.451",
+            "pantrypal-tests-md#c3@0.351",
+            "pantrypal-readme-md#c0@0.330"
+          ],
+          "semantic_hit1": 1,
+          "semantic_hit3": 1
+        },
+        {
+          "id": "q46",
+          "category": "cross_project",
+          "query": "Which project has a 2 MB file cap?",
+          "gold": [
+            "inkwell-limits-md#c0"
+          ],
+          "semantic_abstained": false,
+          "semantic_top3": [
+            "trailmend-setup-md#c3@0.387",
+            "inkwell-limits-md#c0@0.351",
+            "trailmend-setup-md#c2@0.290"
+          ],
+          "semantic_hit1": 0,
+          "semantic_hit3": 1
+        },
+        {
+          "id": "q47",
+          "category": "cross_project",
+          "query": "Which project's tests were run on two machines?",
+          "gold": [
+            "pantrypal-tests-md#c1",
+            "inkwell-tests-md#c2"
+          ],
+          "semantic_abstained": false,
+          "semantic_top3": [
+            "trailmend-tests-md#c1@0.451",
+            "inkwell-tests-md#c3@0.433",
+            "pantrypal-tests-md#c2@0.427"
+          ],
+          "semantic_hit1": 0,
+          "semantic_hit3": 0
+        },
+        {
+          "id": "q48",
+          "category": "cross_project",
+          "query": "Which app needs a camera?",
+          "gold": [
+            "pantrypal-readme-md#c0",
+            "pantrypal-setup-md#c2"
+          ],
+          "semantic_abstained": false,
+          "semantic_top3": [
+            "pantrypal-limits-md#c2@0.503",
+            "pantrypal-setup-md#c2@0.443",
+            "pantrypal-readme-md#c1@0.237"
+          ],
+          "semantic_hit1": 0,
+          "semantic_hit3": 1
+        }
+      ]
+    },
+    {
+      "method": "hybrid",
+      "answerable": {
+        "n": 40,
+        "hit1_n": 23,
+        "hit3_n": 31,
+        "hit1": 0.575,
+        "hit3": 0.775,
+        "mrr": 0.702
+      },
+      "abstention": {
+        "n_no_answer": 8,
+        "correct": 0,
+        "missed": 8,
+        "false_abstains": 0,
+        "precision": null,
+        "recall": 0
+      },
+      "per_category": {
+        "paraphrase": {
+          "n": 8,
+          "hit1": 0.625,
+          "hit3": 0.875,
+          "mrr": 0.76,
+          "abstain_ok": null
+        },
+        "identifier": {
+          "n": 8,
+          "hit1": 0.875,
+          "hit3": 0.875,
+          "mrr": 0.896,
+          "abstain_ok": null
+        },
+        "negation": {
+          "n": 8,
+          "hit1": 0.5,
+          "hit3": 0.875,
+          "mrr": 0.719,
+          "abstain_ok": null
+        },
+        "numbers": {
+          "n": 8,
+          "hit1": 0.375,
+          "hit3": 0.5,
+          "mrr": 0.498,
+          "abstain_ok": null
+        },
+        "no_answer": {
+          "n": 8,
+          "hit1": null,
+          "hit3": null,
+          "mrr": null,
+          "abstain_ok": "0/8"
+        },
+        "cross_project": {
+          "n": 8,
+          "hit1": 0.5,
+          "hit3": 0.75,
+          "mrr": 0.638,
+          "abstain_ok": null
+        }
+      },
+      "failures": [
+        {
+          "q": "q02",
+          "expected": "inkwell-readme-md#c0",
+          "got": "inkwell-setup-md#c0, inkwell-limits-md#c1, inkwell-readme-md#c0",
+          "note": "gold at rank 3"
+        },
+        {
+          "q": "q04",
+          "expected": "pantrypal-readme-md#c1",
+          "got": "pantrypal-readme-md#c0, pantrypal-readme-md#c1, pantrypal-tests-md#c3",
+          "note": "gold at rank 2"
+        },
+        {
+          "q": "q05",
+          "expected": "trailmend-readme-md#c1",
+          "got": "inkwell-limits-md#c2, inkwell-tests-md#c3, inkwell-limits-md#c0",
+          "note": "gold at rank 4"
+        },
+        {
+          "q": "q16",
+          "expected": "trailmend-tests-md#c2",
+          "got": "trailmend-tests-md#c0, pantrypal-tests-md#c2, trailmend-setup-md#c0",
+          "note": "gold at rank 6"
+        },
+        {
+          "q": "q18",
+          "expected": "pantrypal-limits-md#c2",
+          "got": "pantrypal-readme-md#c0, pantrypal-limits-md#c2, pantrypal-setup-md#c2",
+          "note": "gold at rank 2"
+        },
+        {
+          "q": "q19",
+          "expected": "inkwell-limits-md#c0",
+          "got": "inkwell-readme-md#c0, inkwell-limits-md#c0, inkwell-setup-md#c0",
+          "note": "gold at rank 2"
+        },
+        {
+          "q": "q21",
+          "expected": "inkwell-limits-md#c1",
+          "got": "inkwell-readme-md#c2, inkwell-readme-md#c0, inkwell-limits-md#c0",
+          "note": "gold at rank 4"
+        },
+        {
+          "q": "q24",
+          "expected": "trailmend-limits-md#c2",
+          "got": "trailmend-readme-md#c1, trailmend-limits-md#c2, trailmend-setup-md#c1",
+          "note": "gold at rank 2"
+        },
+        {
+          "q": "q25",
+          "expected": "trailmend-tests-md#c1 | trailmend-tests-md#c2",
+          "got": "trailmend-setup-md#c0, trailmend-tests-md#c0, pantrypal-tests-md#c2",
+          "note": "gold at rank 12"
+        },
+        {
+          "q": "q26",
+          "expected": "inkwell-limits-md#c0",
+          "got": "inkwell-limits-md#c1, inkwell-readme-md#c0, pantrypal-readme-md#c2",
+          "note": "gold at rank 9"
+        },
+        {
+          "q": "q27",
+          "expected": "pantrypal-tests-md#c1",
+          "got": "pantrypal-tests-md#c2, pantrypal-tests-md#c1, pantrypal-tests-md#c0",
+          "note": "gold at rank 2"
+        },
+        {
+          "q": "q30",
+          "expected": "inkwell-readme-md#c1",
+          "got": "inkwell-readme-md#c0, inkwell-tests-md#c0, inkwell-setup-md#c2",
+          "note": "gold at rank 4"
+        },
+        {
+          "q": "q32",
+          "expected": "inkwell-tests-md#c2",
+          "got": "inkwell-tests-md#c3, inkwell-tests-md#c0, inkwell-setup-md#c2",
+          "note": "gold at rank 28"
+        },
+        {
+          "q": "q33",
+          "expected": "(abstain)",
+          "got": "pantrypal-readme-md#c0",
+          "note": "false positive on a no-answer question"
+        },
+        {
+          "q": "q34",
+          "expected": "(abstain)",
+          "got": "trailmend-readme-md#c0",
+          "note": "false positive on a no-answer question"
+        },
+        {
+          "q": "q35",
+          "expected": "(abstain)",
+          "got": "inkwell-readme-md#c0",
+          "note": "false positive on a no-answer question"
+        },
+        {
+          "q": "q36",
+          "expected": "(abstain)",
+          "got": "trailmend-readme-md#c2",
+          "note": "false positive on a no-answer question"
+        },
+        {
+          "q": "q37",
+          "expected": "(abstain)",
+          "got": "pantrypal-readme-md#c0",
+          "note": "false positive on a no-answer question"
+        },
+        {
+          "q": "q38",
+          "expected": "(abstain)",
+          "got": "trailmend-readme-md#c0",
+          "note": "false positive on a no-answer question"
+        },
+        {
+          "q": "q39",
+          "expected": "(abstain)",
+          "got": "pantrypal-readme-md#c0",
+          "note": "false positive on a no-answer question"
+        },
+        {
+          "q": "q40",
+          "expected": "(abstain)",
+          "got": "inkwell-readme-md#c0",
+          "note": "false positive on a no-answer question"
+        },
+        {
+          "q": "q41",
+          "expected": "inkwell-tests-md#c1",
+          "got": "inkwell-tests-md#c2, inkwell-tests-md#c3, trailmend-tests-md#c0",
+          "note": "gold at rank 7"
+        },
+        {
+          "q": "q45",
+          "expected": "pantrypal-readme-md#c1",
+          "got": "pantrypal-readme-md#c0, inkwell-tests-md#c2, inkwell-limits-md#c0",
+          "note": "gold at rank 8"
+        },
+        {
+          "q": "q47",
+          "expected": "pantrypal-tests-md#c1 | inkwell-tests-md#c2",
+          "got": "pantrypal-tests-md#c2, trailmend-setup-md#c2, inkwell-tests-md#c2",
+          "note": "gold at rank 3"
+        },
+        {
+          "q": "q48",
+          "expected": "pantrypal-readme-md#c0 | pantrypal-setup-md#c2",
+          "got": "pantrypal-limits-md#c2, pantrypal-readme-md#c0, pantrypal-setup-md#c2",
+          "note": "gold at rank 2"
+        }
+      ],
+      "rows": [
+        {
+          "id": "q01",
+          "category": "paraphrase",
+          "query": "Can I use the trail planner on a plane with no signal?",
+          "gold": [
+            "trailmend-limits-md#c0",
+            "trailmend-readme-md#c0"
+          ],
+          "hybrid_abstained": false,
+          "hybrid_top3": [
+            "trailmend-readme-md#c0@0.000",
+            "trailmend-readme-md#c1@0.000",
+            "inkwell-limits-md#c2@0.000"
+          ],
+          "hybrid_hit1": 1,
+          "hybrid_hit3": 1
+        },
+        {
+          "id": "q02",
+          "category": "paraphrase",
+          "query": "Could the company hosting the relay read what I write?",
+          "gold": [
+            "inkwell-readme-md#c0"
+          ],
+          "hybrid_abstained": false,
+          "hybrid_top3": [
+            "inkwell-setup-md#c0@0.000",
+            "inkwell-limits-md#c1@0.000",
+            "inkwell-readme-md#c0@0.000"
+          ],
+          "hybrid_hit1": 0,
+          "hybrid_hit3": 1
+        },
+        {
+          "id": "q03",
+          "category": "paraphrase",
+          "query": "How do I get my grocery data into a spreadsheet?",
+          "gold": [
+            "pantrypal-readme-md#c2"
+          ],
+          "hybrid_abstained": false,
+          "hybrid_top3": [
+            "pantrypal-readme-md#c2@0.000",
+            "pantrypal-readme-md#c1@0.000",
+            "trailmend-readme-md#c0@0.000"
+          ],
+          "hybrid_hit1": 1,
+          "hybrid_hit3": 1
+        },
+        {
+          "id": "q04",
+          "category": "paraphrase",
+          "query": "Will it warn me before the milk goes bad?",
+          "gold": [
+            "pantrypal-readme-md#c1"
+          ],
+          "hybrid_abstained": false,
+          "hybrid_top3": [
+            "pantrypal-readme-md#c0@0.000",
+            "pantrypal-readme-md#c1@0.000",
+            "pantrypal-tests-md#c3@0.000"
+          ],
+          "hybrid_hit1": 0,
+          "hybrid_hit3": 1
+        },
+        {
+          "id": "q05",
+          "category": "paraphrase",
+          "query": "How long will my hike take?",
+          "gold": [
+            "trailmend-readme-md#c1"
+          ],
+          "hybrid_abstained": false,
+          "hybrid_top3": [
+            "inkwell-limits-md#c2@0.000",
+            "inkwell-tests-md#c3@0.000",
+            "inkwell-limits-md#c0@0.000"
+          ],
+          "hybrid_hit1": 0,
+          "hybrid_hit3": 0
+        },
+        {
+          "id": "q06",
+          "category": "paraphrase",
+          "query": "Can two people share one shopping list at home?",
+          "gold": [
+            "pantrypal-readme-md#c1"
+          ],
+          "hybrid_abstained": false,
+          "hybrid_top3": [
+            "pantrypal-readme-md#c1@0.000",
+            "pantrypal-readme-md#c2@0.000",
+            "pantrypal-limits-md#c2@0.000"
+          ],
+          "hybrid_hit1": 1,
+          "hybrid_hit3": 1
+        },
+        {
+          "id": "q07",
+          "category": "paraphrase",
+          "query": "What happens when the same note is edited on two laptops at once?",
+          "gold": [
+            "inkwell-readme-md#c1",
+            "inkwell-limits-md#c1"
+          ],
+          "hybrid_abstained": false,
+          "hybrid_top3": [
+            "inkwell-limits-md#c1@0.000",
+            "pantrypal-limits-md#c1@0.000",
+            "pantrypal-tests-md#c2@0.000"
+          ],
+          "hybrid_hit1": 1,
+          "hybrid_hit3": 1
+        },
+        {
+          "id": "q08",
+          "category": "paraphrase",
+          "query": "Can I send my trip plan to a friend as a document?",
+          "gold": [
+            "trailmend-readme-md#c2"
+          ],
+          "hybrid_abstained": false,
+          "hybrid_top3": [
+            "trailmend-readme-md#c2@0.000",
+            "trailmend-limits-md#c2@0.000",
+            "pantrypal-readme-md#c2@0.000"
+          ],
+          "hybrid_hit1": 1,
+          "hybrid_hit3": 1
+        },
+        {
+          "id": "q09",
+          "category": "identifier",
+          "query": "What does TRAILMEND_TILE_DIR configure?",
+          "gold": [
+            "trailmend-setup-md#c1"
+          ],
+          "hybrid_abstained": false,
+          "hybrid_top3": [
+            "trailmend-setup-md#c1@0.000",
+            "trailmend-limits-md#c2@0.000",
+            "inkwell-readme-md#c0@0.000"
+          ],
+          "hybrid_hit1": 1,
+          "hybrid_hit3": 1
+        },
+        {
+          "id": "q10",
+          "category": "identifier",
+          "query": "Which port does the pantry web UI use?",
+          "gold": [
+            "pantrypal-setup-md#c2"
+          ],
+          "hybrid_abstained": false,
+          "hybrid_top3": [
+            "pantrypal-setup-md#c2@0.000",
+            "pantrypal-readme-md#c0@0.000",
+            "pantrypal-setup-md#c0@0.000"
+          ],
+          "hybrid_hit1": 1,
+          "hybrid_hit3": 1
+        },
+        {
+          "id": "q11",
+          "category": "identifier",
+          "query": "Where is INKWELL_KEY used?",
+          "gold": [
+            "inkwell-setup-md#c1"
+          ],
+          "hybrid_abstained": false,
+          "hybrid_top3": [
+            "inkwell-setup-md#c1@0.000",
+            "inkwell-readme-md#c2@0.000",
+            "inkwell-readme-md#c0@0.000"
+          ],
+          "hybrid_hit1": 1,
+          "hybrid_hit3": 1
+        },
+        {
+          "id": "q12",
+          "category": "identifier",
+          "query": "How big is the elevation database file?",
+          "gold": [
+            "trailmend-setup-md#c3"
+          ],
+          "hybrid_abstained": false,
+          "hybrid_top3": [
+            "trailmend-setup-md#c3@0.000",
+            "trailmend-tests-md#c3@0.000",
+            "trailmend-limits-md#c1@0.000"
+          ],
+          "hybrid_hit1": 1,
+          "hybrid_hit3": 1
+        },
+        {
+          "id": "q13",
+          "category": "identifier",
+          "query": "What is the name of the failing GPX test?",
+          "gold": [
+            "trailmend-tests-md#c2"
+          ],
+          "hybrid_abstained": false,
+          "hybrid_top3": [
+            "trailmend-tests-md#c2@0.000",
+            "trailmend-tests-md#c0@0.000",
+            "inkwell-tests-md#c3@0.000"
+          ],
+          "hybrid_hit1": 1,
+          "hybrid_hit3": 1
+        },
+        {
+          "id": "q14",
+          "category": "identifier",
+          "query": "Which port does the Inkwell relay listen on?",
+          "gold": [
+            "inkwell-setup-md#c0"
+          ],
+          "hybrid_abstained": false,
+          "hybrid_top3": [
+            "inkwell-setup-md#c0@0.000",
+            "inkwell-readme-md#c0@0.000",
+            "inkwell-readme-md#c2@0.000"
+          ],
+          "hybrid_hit1": 1,
+          "hybrid_hit3": 1
+        },
+        {
+          "id": "q15",
+          "category": "identifier",
+          "query": "What env var points at the inventory database?",
+          "gold": [
+            "pantrypal-setup-md#c1"
+          ],
+          "hybrid_abstained": false,
+          "hybrid_top3": [
+            "pantrypal-setup-md#c1@0.000",
+            "pantrypal-readme-md#c2@0.000",
+            "pantrypal-readme-md#c0@0.000"
+          ],
+          "hybrid_hit1": 1,
+          "hybrid_hit3": 1
+        },
+        {
+          "id": "q16",
+          "category": "identifier",
+          "query": "Which issue tracks the failing TrailMend tests?",
+          "gold": [
+            "trailmend-tests-md#c2"
+          ],
+          "hybrid_abstained": false,
+          "hybrid_top3": [
+            "trailmend-tests-md#c0@0.000",
+            "pantrypal-tests-md#c2@0.000",
+            "trailmend-setup-md#c0@0.000"
+          ],
+          "hybrid_hit1": 0,
+          "hybrid_hit3": 0
+        },
+        {
+          "id": "q17",
+          "category": "negation",
+          "query": "Does TrailMend route planning work without internet?",
+          "gold": [
+            "trailmend-limits-md#c0"
+          ],
+          "hybrid_abstained": false,
+          "hybrid_top3": [
+            "trailmend-limits-md#c0@0.000",
+            "trailmend-readme-md#c0@0.000",
+            "trailmend-setup-md#c0@0.000"
+          ],
+          "hybrid_hit1": 1,
+          "hybrid_hit3": 1
+        },
+        {
+          "id": "q18",
+          "category": "negation",
+          "query": "Can PantryPal scan barcodes over plain HTTP on a LAN?",
+          "gold": [
+            "pantrypal-limits-md#c2"
+          ],
+          "hybrid_abstained": false,
+          "hybrid_top3": [
+            "pantrypal-readme-md#c0@0.000",
+            "pantrypal-limits-md#c2@0.000",
+            "pantrypal-setup-md#c2@0.000"
+          ],
+          "hybrid_hit1": 0,
+          "hybrid_hit3": 1
+        },
+        {
+          "id": "q19",
+          "category": "negation",
+          "query": "Are Inkwell file names private from the relay?",
+          "gold": [
+            "inkwell-limits-md#c0"
+          ],
+          "hybrid_abstained": false,
+          "hybrid_top3": [
+            "inkwell-readme-md#c0@0.000",
+            "inkwell-limits-md#c0@0.000",
+            "inkwell-setup-md#c0@0.000"
+          ],
+          "hybrid_hit1": 0,
+          "hybrid_hit3": 1
+        },
+        {
+          "id": "q20",
+          "category": "negation",
+          "query": "Does local sync work across the internet?",
+          "gold": [
+            "pantrypal-limits-md#c1"
+          ],
+          "hybrid_abstained": false,
+          "hybrid_top3": [
+            "pantrypal-limits-md#c1@0.000",
+            "pantrypal-readme-md#c1@0.000",
+            "inkwell-limits-md#c2@0.000"
+          ],
+          "hybrid_hit1": 1,
+          "hybrid_hit3": 1
+        },
+        {
+          "id": "q21",
+          "category": "negation",
+          "query": "Is there an Inkwell mobile client?",
+          "gold": [
+            "inkwell-limits-md#c1"
+          ],
+          "hybrid_abstained": false,
+          "hybrid_top3": [
+            "inkwell-readme-md#c2@0.000",
+            "inkwell-readme-md#c0@0.000",
+            "inkwell-limits-md#c0@0.000"
+          ],
+          "hybrid_hit1": 0,
+          "hybrid_hit3": 0
+        },
+        {
+          "id": "q22",
+          "category": "negation",
+          "query": "Does the conflict merge keep both edits?",
+          "gold": [
+            "inkwell-limits-md#c1"
+          ],
+          "hybrid_abstained": false,
+          "hybrid_top3": [
+            "inkwell-limits-md#c1@0.000",
+            "pantrypal-limits-md#c1@0.000",
+            "inkwell-readme-md#c1@0.000"
+          ],
+          "hybrid_hit1": 1,
+          "hybrid_hit3": 1
+        },
+        {
+          "id": "q23",
+          "category": "negation",
+          "query": "Will TrailMend show an elevation profile for a hike in Japan?",
+          "gold": [
+            "trailmend-limits-md#c1"
+          ],
+          "hybrid_abstained": false,
+          "hybrid_top3": [
+            "trailmend-limits-md#c1@0.000",
+            "trailmend-readme-md#c0@0.000",
+            "trailmend-tests-md#c3@0.000"
+          ],
+          "hybrid_hit1": 1,
+          "hybrid_hit3": 1
+        },
+        {
+          "id": "q24",
+          "category": "negation",
+          "query": "Does the hiking time estimate handle snowy trails?",
+          "gold": [
+            "trailmend-limits-md#c2"
+          ],
+          "hybrid_abstained": false,
+          "hybrid_top3": [
+            "trailmend-readme-md#c1@0.000",
+            "trailmend-limits-md#c2@0.000",
+            "trailmend-setup-md#c1@0.000"
+          ],
+          "hybrid_hit1": 0,
+          "hybrid_hit3": 1
+        },
+        {
+          "id": "q25",
+          "category": "numbers",
+          "query": "How many TrailMend tests fail?",
+          "gold": [
+            "trailmend-tests-md#c1",
+            "trailmend-tests-md#c2"
+          ],
+          "hybrid_abstained": false,
+          "hybrid_top3": [
+            "trailmend-setup-md#c0@0.000",
+            "trailmend-tests-md#c0@0.000",
+            "pantrypal-tests-md#c2@0.000"
+          ],
+          "hybrid_hit1": 0,
+          "hybrid_hit3": 0
+        },
+        {
+          "id": "q26",
+          "category": "numbers",
+          "query": "What size limit applies to a single note?",
+          "gold": [
+            "inkwell-limits-md#c0"
+          ],
+          "hybrid_abstained": false,
+          "hybrid_top3": [
+            "inkwell-limits-md#c1@0.000",
+            "inkwell-readme-md#c0@0.000",
+            "pantrypal-readme-md#c2@0.000"
+          ],
+          "hybrid_hit1": 0,
+          "hybrid_hit3": 0
+        },
+        {
+          "id": "q27",
+          "category": "numbers",
+          "query": "How many PantryPal tests were skipped?",
+          "gold": [
+            "pantrypal-tests-md#c1"
+          ],
+          "hybrid_abstained": false,
+          "hybrid_top3": [
+            "pantrypal-tests-md#c2@0.000",
+            "pantrypal-tests-md#c1@0.000",
+            "pantrypal-tests-md#c0@0.000"
+          ],
+          "hybrid_hit1": 0,
+          "hybrid_hit3": 1
+        },
+        {
+          "id": "q28",
+          "category": "numbers",
+          "query": "How far ahead do expiry alerts fire?",
+          "gold": [
+            "pantrypal-readme-md#c1"
+          ],
+          "hybrid_abstained": false,
+          "hybrid_top3": [
+            "pantrypal-readme-md#c1@0.000",
+            "inkwell-limits-md#c2@0.000",
+            "inkwell-limits-md#c1@0.000"
+          ],
+          "hybrid_hit1": 1,
+          "hybrid_hit3": 1
+        },
+        {
+          "id": "q29",
+          "category": "numbers",
+          "query": "How much disk does the tile bundle need?",
+          "gold": [
+            "trailmend-setup-md#c1"
+          ],
+          "hybrid_abstained": false,
+          "hybrid_top3": [
+            "trailmend-setup-md#c1@0.000",
+            "trailmend-readme-md#c1@0.000",
+            "trailmend-limits-md#c0@0.000"
+          ],
+          "hybrid_hit1": 1,
+          "hybrid_hit3": 1
+        },
+        {
+          "id": "q30",
+          "category": "numbers",
+          "query": "How often does Inkwell sync?",
+          "gold": [
+            "inkwell-readme-md#c1"
+          ],
+          "hybrid_abstained": false,
+          "hybrid_top3": [
+            "inkwell-readme-md#c0@0.000",
+            "inkwell-tests-md#c0@0.000",
+            "inkwell-setup-md#c2@0.000"
+          ],
+          "hybrid_hit1": 0,
+          "hybrid_hit3": 0
+        },
+        {
+          "id": "q31",
+          "category": "numbers",
+          "query": "What is TrailMend's line coverage?",
+          "gold": [
+            "trailmend-tests-md#c3"
+          ],
+          "hybrid_abstained": false,
+          "hybrid_top3": [
+            "trailmend-tests-md#c3@0.000",
+            "trailmend-readme-md#c2@0.000",
+            "pantrypal-tests-md#c3@0.000"
+          ],
+          "hybrid_hit1": 1,
+          "hybrid_hit3": 1
+        },
+        {
+          "id": "q32",
+          "category": "numbers",
+          "query": "How many notes were in the Inkwell soak test?",
+          "gold": [
+            "inkwell-tests-md#c2"
+          ],
+          "hybrid_abstained": false,
+          "hybrid_top3": [
+            "inkwell-tests-md#c3@0.000",
+            "inkwell-tests-md#c0@0.000",
+            "inkwell-setup-md#c2@0.000"
+          ],
+          "hybrid_hit1": 0,
+          "hybrid_hit3": 0
+        },
+        {
+          "id": "q33",
+          "category": "no_answer",
+          "query": "Does PantryPal have a French language mode?",
+          "gold": [],
+          "hybrid_abstained": false,
+          "hybrid_top3": [
+            "pantrypal-readme-md#c0@0.000",
+            "pantrypal-setup-md#c0@0.000",
+            "pantrypal-readme-md#c2@0.000"
+          ]
+        },
+        {
+          "id": "q34",
+          "category": "no_answer",
+          "query": "What database does TrailMend use for user accounts?",
+          "gold": [],
+          "hybrid_abstained": false,
+          "hybrid_top3": [
+            "trailmend-readme-md#c0@0.000",
+            "trailmend-tests-md#c0@0.000",
+            "trailmend-setup-md#c0@0.000"
+          ]
+        },
+        {
+          "id": "q35",
+          "category": "no_answer",
+          "query": "Can Inkwell sync to Google Drive?",
+          "gold": [],
+          "hybrid_abstained": false,
+          "hybrid_top3": [
+            "inkwell-readme-md#c0@0.000",
+            "inkwell-setup-md#c2@0.000",
+            "inkwell-tests-md#c0@0.000"
+          ]
+        },
+        {
+          "id": "q36",
+          "category": "no_answer",
+          "query": "What is the refund policy for the TrailMend Pro plan?",
+          "gold": [],
+          "hybrid_abstained": false,
+          "hybrid_top3": [
+            "trailmend-readme-md#c2@0.000",
+            "trailmend-readme-md#c0@0.000",
+            "trailmend-limits-md#c0@0.000"
+          ]
+        },
+        {
+          "id": "q37",
+          "category": "no_answer",
+          "query": "Does PantryPal track nutrition macros?",
+          "gold": [],
+          "hybrid_abstained": false,
+          "hybrid_top3": [
+            "pantrypal-readme-md#c0@0.000",
+            "pantrypal-setup-md#c0@0.000",
+            "pantrypal-readme-md#c2@0.000"
+          ]
+        },
+        {
+          "id": "q38",
+          "category": "no_answer",
+          "query": "What encryption does TrailMend use for GPX files?",
+          "gold": [],
+          "hybrid_abstained": false,
+          "hybrid_top3": [
+            "trailmend-readme-md#c0@0.000",
+            "trailmend-limits-md#c0@0.000",
+            "trailmend-setup-md#c0@0.000"
+          ]
+        },
+        {
+          "id": "q39",
+          "category": "no_answer",
+          "query": "Is there a dark mode in PantryPal?",
+          "gold": [],
+          "hybrid_abstained": false,
+          "hybrid_top3": [
+            "pantrypal-readme-md#c0@0.000",
+            "pantrypal-readme-md#c2@0.000",
+            "pantrypal-setup-md#c0@0.000"
+          ]
+        },
+        {
+          "id": "q40",
+          "category": "no_answer",
+          "query": "How many contributors maintain Inkwell?",
+          "gold": [],
+          "hybrid_abstained": false,
+          "hybrid_top3": [
+            "inkwell-readme-md#c0@0.000",
+            "inkwell-readme-md#c2@0.000",
+            "inkwell-tests-md#c0@0.000"
+          ]
+        },
+        {
+          "id": "q41",
+          "category": "cross_project",
+          "query": "Which project fails a retry timing test?",
+          "gold": [
+            "inkwell-tests-md#c1"
+          ],
+          "hybrid_abstained": false,
+          "hybrid_top3": [
+            "inkwell-tests-md#c2@0.000",
+            "inkwell-tests-md#c3@0.000",
+            "trailmend-tests-md#c0@0.000"
+          ],
+          "hybrid_hit1": 0,
+          "hybrid_hit3": 0
+        },
+        {
+          "id": "q42",
+          "category": "cross_project",
+          "query": "Which app listens on port 4173?",
+          "gold": [
+            "trailmend-setup-md#c2"
+          ],
+          "hybrid_abstained": false,
+          "hybrid_top3": [
+            "trailmend-setup-md#c2@0.000",
+            "pantrypal-limits-md#c2@0.000",
+            "pantrypal-setup-md#c2@0.000"
+          ],
+          "hybrid_hit1": 1,
+          "hybrid_hit3": 1
+        },
+        {
+          "id": "q43",
+          "category": "cross_project",
+          "query": "Which project stores its data in SQLite?",
+          "gold": [
+            "pantrypal-readme-md#c2",
+            "trailmend-setup-md#c3"
+          ],
+          "hybrid_abstained": false,
+          "hybrid_top3": [
+            "trailmend-setup-md#c3@0.000",
+            "pantrypal-readme-md#c2@0.000",
+            "pantrypal-setup-md#c1@0.000"
+          ],
+          "hybrid_hit1": 1,
+          "hybrid_hit3": 1
+        },
+        {
+          "id": "q44",
+          "category": "cross_project",
+          "query": "Which tool uses end-to-end encryption?",
+          "gold": [
+            "inkwell-readme-md#c0"
+          ],
+          "hybrid_abstained": false,
+          "hybrid_top3": [
+            "inkwell-readme-md#c0@0.000",
+            "pantrypal-readme-md#c0@0.000",
+            "inkwell-tests-md#c2@0.000"
+          ],
+          "hybrid_hit1": 1,
+          "hybrid_hit3": 1
+        },
+        {
+          "id": "q45",
+          "category": "cross_project",
+          "query": "Which project warns about expiring items?",
+          "gold": [
+            "pantrypal-readme-md#c1"
+          ],
+          "hybrid_abstained": false,
+          "hybrid_top3": [
+            "pantrypal-readme-md#c0@0.000",
+            "inkwell-tests-md#c2@0.000",
+            "inkwell-limits-md#c0@0.000"
+          ],
+          "hybrid_hit1": 0,
+          "hybrid_hit3": 0
+        },
+        {
+          "id": "q46",
+          "category": "cross_project",
+          "query": "Which project has a 2 MB file cap?",
+          "gold": [
+            "inkwell-limits-md#c0"
+          ],
+          "hybrid_abstained": false,
+          "hybrid_top3": [
+            "inkwell-limits-md#c0@0.000",
+            "trailmend-setup-md#c3@0.000",
+            "inkwell-limits-md#c2@0.000"
+          ],
+          "hybrid_hit1": 1,
+          "hybrid_hit3": 1
+        },
+        {
+          "id": "q47",
+          "category": "cross_project",
+          "query": "Which project's tests were run on two machines?",
+          "gold": [
+            "pantrypal-tests-md#c1",
+            "inkwell-tests-md#c2"
+          ],
+          "hybrid_abstained": false,
+          "hybrid_top3": [
+            "pantrypal-tests-md#c2@0.000",
+            "trailmend-setup-md#c2@0.000",
+            "inkwell-tests-md#c2@0.000"
+          ],
+          "hybrid_hit1": 0,
+          "hybrid_hit3": 1
+        },
+        {
+          "id": "q48",
+          "category": "cross_project",
+          "query": "Which app needs a camera?",
+          "gold": [
+            "pantrypal-readme-md#c0",
+            "pantrypal-setup-md#c2"
+          ],
+          "hybrid_abstained": false,
+          "hybrid_top3": [
+            "pantrypal-limits-md#c2@0.000",
+            "pantrypal-readme-md#c0@0.000",
+            "pantrypal-setup-md#c2@0.000"
+          ],
+          "hybrid_hit1": 0,
+          "hybrid_hit3": 1
+        }
+      ]
+    }
+  ]
+}

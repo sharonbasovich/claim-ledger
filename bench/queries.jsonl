@@ -1,0 +1,48 @@
+{"id":"q01","category":"paraphrase","query":"Can I use the trail planner on a plane with no signal?","gold":["trailmend-limits-md#c0","trailmend-readme-md#c0"]}
+{"id":"q02","category":"paraphrase","query":"Could the company hosting the relay read what I write?","gold":["inkwell-readme-md#c0"]}
+{"id":"q03","category":"paraphrase","query":"How do I get my grocery data into a spreadsheet?","gold":["pantrypal-readme-md#c2"]}
+{"id":"q04","category":"paraphrase","query":"Will it warn me before the milk goes bad?","gold":["pantrypal-readme-md#c1"]}
+{"id":"q05","category":"paraphrase","query":"How long will my hike take?","gold":["trailmend-readme-md#c1"]}
+{"id":"q06","category":"paraphrase","query":"Can two people share one shopping list at home?","gold":["pantrypal-readme-md#c1"]}
+{"id":"q07","category":"paraphrase","query":"What happens when the same note is edited on two laptops at once?","gold":["inkwell-readme-md#c1","inkwell-limits-md#c1"]}
+{"id":"q08","category":"paraphrase","query":"Can I send my trip plan to a friend as a document?","gold":["trailmend-readme-md#c2"]}
+{"id":"q09","category":"identifier","query":"What does TRAILMEND_TILE_DIR configure?","gold":["trailmend-setup-md#c1"]}
+{"id":"q10","category":"identifier","query":"Which port does the pantry web UI use?","gold":["pantrypal-setup-md#c2"]}
+{"id":"q11","category":"identifier","query":"Where is INKWELL_KEY used?","gold":["inkwell-setup-md#c1"]}
+{"id":"q12","category":"identifier","query":"How big is the elevation database file?","gold":["trailmend-setup-md#c3"]}
+{"id":"q13","category":"identifier","query":"What is the name of the failing GPX test?","gold":["trailmend-tests-md#c2"]}
+{"id":"q14","category":"identifier","query":"Which port does the Inkwell relay listen on?","gold":["inkwell-setup-md#c0"]}
+{"id":"q15","category":"identifier","query":"What env var points at the inventory database?","gold":["pantrypal-setup-md#c1"]}
+{"id":"q16","category":"identifier","query":"Which issue tracks the failing TrailMend tests?","gold":["trailmend-tests-md#c2"]}
+{"id":"q17","category":"negation","query":"Does TrailMend route planning work without internet?","gold":["trailmend-limits-md#c0"]}
+{"id":"q18","category":"negation","query":"Can PantryPal scan barcodes over plain HTTP on a LAN?","gold":["pantrypal-limits-md#c2"]}
+{"id":"q19","category":"negation","query":"Are Inkwell file names private from the relay?","gold":["inkwell-limits-md#c0"]}
+{"id":"q20","category":"negation","query":"Does local sync work across the internet?","gold":["pantrypal-limits-md#c1"]}
+{"id":"q21","category":"negation","query":"Is there an Inkwell mobile client?","gold":["inkwell-limits-md#c1"]}
+{"id":"q22","category":"negation","query":"Does the conflict merge keep both edits?","gold":["inkwell-limits-md#c1"]}
+{"id":"q23","category":"negation","query":"Will TrailMend show an elevation profile for a hike in Japan?","gold":["trailmend-limits-md#c1"]}
+{"id":"q24","category":"negation","query":"Does the hiking time estimate handle snowy trails?","gold":["trailmend-limits-md#c2"]}
+{"id":"q25","category":"numbers","query":"How many TrailMend tests fail?","gold":["trailmend-tests-md#c1","trailmend-tests-md#c2"]}
+{"id":"q26","category":"numbers","query":"What size limit applies to a single note?","gold":["inkwell-limits-md#c0"]}
+{"id":"q27","category":"numbers","query":"How many PantryPal tests were skipped?","gold":["pantrypal-tests-md#c1"]}
+{"id":"q28","category":"numbers","query":"How far ahead do expiry alerts fire?","gold":["pantrypal-readme-md#c1"]}
+{"id":"q29","category":"numbers","query":"How much disk does the tile bundle need?","gold":["trailmend-setup-md#c1"]}
+{"id":"q30","category":"numbers","query":"How often does Inkwell sync?","gold":["inkwell-readme-md#c1"]}
+{"id":"q31","category":"numbers","query":"What is TrailMend's line coverage?","gold":["trailmend-tests-md#c3"]}
+{"id":"q32","category":"numbers","query":"How many notes were in the Inkwell soak test?","gold":["inkwell-tests-md#c2"]}
+{"id":"q33","category":"no_answer","query":"Does PantryPal have a French language mode?","gold":[]}
+{"id":"q34","category":"no_answer","query":"What database does TrailMend use for user accounts?","gold":[]}
+{"id":"q35","category":"no_answer","query":"Can Inkwell sync to Google Drive?","gold":[]}
+{"id":"q36","category":"no_answer","query":"What is the refund policy for the TrailMend Pro plan?","gold":[]}
+{"id":"q37","category":"no_answer","query":"Does PantryPal track nutrition macros?","gold":[]}
+{"id":"q38","category":"no_answer","query":"What encryption does TrailMend use for GPX files?","gold":[]}
+{"id":"q39","category":"no_answer","query":"Is there a dark mode in PantryPal?","gold":[]}
+{"id":"q40","category":"no_answer","query":"How many contributors maintain Inkwell?","gold":[]}
+{"id":"q41","category":"cross_project","query":"Which project fails a retry timing test?","gold":["inkwell-tests-md#c1"]}
+{"id":"q42","category":"cross_project","query":"Which app listens on port 4173?","gold":["trailmend-setup-md#c2"]}
+{"id":"q43","category":"cross_project","query":"Which project stores its data in SQLite?","gold":["pantrypal-readme-md#c2","trailmend-setup-md#c3"]}
+{"id":"q44","category":"cross_project","query":"Which tool uses end-to-end encryption?","gold":["inkwell-readme-md#c0"]}
+{"id":"q45","category":"cross_project","query":"Which project warns about expiring items?","gold":["pantrypal-readme-md#c1"]}
+{"id":"q46","category":"cross_project","query":"Which project has a 2 MB file cap?","gold":["inkwell-limits-md#c0"]}
+{"id":"q47","category":"cross_project","query":"Which project's tests were run on two machines?","gold":["pantrypal-tests-md#c1","inkwell-tests-md#c2"]}
+{"id":"q48","category":"cross_project","query":"Which app needs a camera?","gold":["pantrypal-readme-md#c0","pantrypal-setup-md#c2"]}
