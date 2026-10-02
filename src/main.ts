@@ -622,7 +622,7 @@ function render() {
     [["Sources", "lane-sources"], ["Claims", "lane-claims"], ["Ask", "lane-ask"]].map(([label, id]) => {
       return el("a", { class: "navlink", href: `#${id}` }, [label]);
     }));
-  nav.append(el("a", { class: "navlink", href: "./source/claim-ledger-source.zip", download: "claim-ledger-source.zip" }, ["Source ↓"]));
+  nav.append(el("a", { class: "navlink", href: "https://github.com/sharonbasovich/claim-ledger" }, ["Source"]));
   header.append(nav);
   const board = el("main", { class: "board" }, [renderSources(), renderClaims(), renderAsk()]);
   root.append(header, ...(banner ? [banner] : []), board);
